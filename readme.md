@@ -1,6 +1,6 @@
 # premake-android-studio
 
-If you are using premake as your build system for Visual Studio, XCode or GNU Make and wanted to easily integrate Android into your development work flow, this module will abstract the confusing world of gradle, ndk, jni and Android Studio.
+If you are using premake as your build configuration system for Visual Studio, XCode or GNU Make and wanted to easily integrate Android into your development work flow, this module will abstract the confusing world of gradle, ndk, jni and Android Studio.
 
 To find out how to use premake modules you can check the reference [here](https://github.com/premake/premake-core/wiki/Using-Modules), You can find the premake-core repository [here](https://github.com/premake/premake-core) and the latest premake executables [here](https://premake.github.io/download.html). 
 
