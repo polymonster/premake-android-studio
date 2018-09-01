@@ -165,6 +165,12 @@ D/Hello world!: I'm Java
 I/CPP: oh hai!, I'm c++
 ```
 
+You can alternatively build from the commandline with the following, provided you have installed the Android sdk and ndk:
+```bash
+cd example/build
+gradle build
+```
+
 To run the example on Linux or Windows add your premake5 executable to this directory and follow the above steps.
 
 
