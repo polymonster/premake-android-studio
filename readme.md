@@ -63,7 +63,7 @@ files
 }
 ```
 
-Resource files such as images and layouts must all be included from a sub directory named res:
+Resource files such as images and layouts must all be included from a sub directory named "res":
 
 ```lua
 files
@@ -72,7 +72,7 @@ files
 }
 ```
 
-AndroidManifest.xml is required for all projects, if one does not exist a simple stub will be auto generated, if an AndroidManifest.xml is specicied inside premake files then this one will be used instead:
+AndroidManifest.xml is required for all projects, if one does not exist a simple stub will be auto generated, if an AndroidManifest.xml is specified inside premake files then this one will be used instead:
 
 ```lua
 files
