@@ -2,14 +2,18 @@
 
 If you are using premake as your build system for Visual Studio, XCode or GNU Make and wanted to easily integrate Android into your development work flow, this module will abstract the confusing world of gradle, ndk, jni and Android Studio.
 
+You can find the latest premake executables [here](https://premake.github.io/download.html) and the premake-core repository [here](https://github.com/premake/premake-core)
+
 *****
 
-Usage:
+## Usage
 ```bash
 premake5 android-studio
 ```
 
-Android specific premake extensions:
+*****
+
+## Android specific premake extensions
 ```bash
 gradleversion "com.android.tools.build:gradle:3.1.4"
 
@@ -27,7 +31,7 @@ androiddependencies
 
 *****
 
-Android specific premake considerations:
+## Android specific premake considerations
 
 To link and .aar (Android Archive) or .jar (Java Archive) simply add them to links along with their extension:
 
@@ -80,6 +84,8 @@ Java, Resource and Manifest files are added to the gradle project.
 
 *****
 
+## Example
+
 An example program is included for testing and reference purposes, it features a main activity, java function call and a jni call to native c++ code.
 
 To run the example (osx only):
@@ -95,8 +101,6 @@ I/CPP: oh hai!, I'm c++
 ```
 
 To run the example on Linux or Windows add your premake5 executable to this directory and follow the above steps.
-
-You can find the latest premake executables [here](https://premake.github.io/download.html)
 
 
 
