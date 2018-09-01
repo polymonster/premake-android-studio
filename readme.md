@@ -10,10 +10,15 @@ premake5 android-studio
 Android specific premake extensions:
 ```bash
 gradleversion "com.android.tools.build:gradle:3.1.4"
+
 androidsdkversion "28"
+
 androidminsdkversion "25"
+
 androiddependencies
 {
-
+  "com.android.support:appcompat-v7:+", 
+  "com.android.support:support-v4:25.0.0",
+  "com.android.support:design:25.0.0"
 }
 ```
