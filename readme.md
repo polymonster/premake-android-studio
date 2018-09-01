@@ -1,4 +1,4 @@
-# premake-android-studio
+# premake-android-studio [![Build Status](https://travis-ci.org/polymonster/premake-android-studio.svg?branch=master)](https://travis-ci.org/polymonster/premake-android-studio)
 
 If you are using premake as your build configuration system for Visual Studio, XCode or GNU Make and wanted to easily integrate Android into your development work flow, this module will abstract the confusing world of gradle, ndk, jni and Android Studio.
 
@@ -63,7 +63,7 @@ files
 }
 ```
 
-Resource files such as images and layouts must all be included from a sub directory named res:
+Resource files such as images and layouts must all be included from a sub directory named "res":
 
 ```lua
 files
@@ -72,7 +72,7 @@ files
 }
 ```
 
-AndroidManifest.xml is required for all projects, if one does not exist a simple stub will be auto generated, if an AndroidManifest.xml is specicied inside premake files then this one will be used instead:
+AndroidManifest.xml is required for all projects, if one does not exist a simple stub will be auto generated, if an AndroidManifest.xml is specified inside premake files then this one will be used instead:
 
 ```lua
 files
