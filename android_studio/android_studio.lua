@@ -10,78 +10,10 @@ local config = p.config
 local fileconfig = p.fileconfig
 local tree = p.tree
 local src_dirs = {}
-
--- Premake extensions
-newaction {
-	trigger     = "android-studio",
-	shortname   = "Android Studio",
-	description = "Generate Android Studio Gradle Files",
 	
-	toolset  	= "clang",
+-- remove this if you want to embed the module
+dofile "_preload.lua"
 
-	-- The capabilities of this action
-	valid_kinds = { 
-		"ConsoleApp", 
-		"WindowedApp", 
-		"SharedLib", 
-		"StaticLib", 
-		"Makefile", 
-		"Utility", 
-		"None" 
-	},
-	valid_languages = { "C", "C++", "Java" },
-	valid_tools = {
-		cc = { "clang" },
-	},
-			
-	-- function overloads
-	onWorkspace = function(wks)
-		p.generate(wks, "settings.gradle", m.generate_workspace_settings)
-		p.generate(wks, "build.gradle", m.generate_workspace)
-	end,
-
-	onProject = function(prj)
-		p.generate(prj, prj.name .. "/src/main/AndroidManifest.xml", m.generate_manifest)
-		p.generate(prj, prj.name .. "/build.gradle", m.generate_project)
-		p.generate(prj, prj.name .. "/CMakeLists.txt", m.generate_cmake_lists)
-	end
-}
-
-p.api.register 
-{
-	name = "gradleversion",
-	scope = "workspace",
-	kind = "string"
-}
-
-p.api.register 
-{
-	name = "androiddependencies",
-	scope = "config",
-	kind = "list:string"
-}
-
-p.api.register 
-{
-	name = "androidsdkversion",
-	scope = "config",
-	kind = "string"
-}
-
-p.api.register 
-{
-	name = "androidbuildtoolsversion",
-	scope = "config",
-	kind = "string"
-}
-
-p.api.register 
-{
-	name = "androidminsdkversion",
-	scope = "config",
-	kind = "string"
-}
-	
 -- Functions
 function m.generate_workspace(wks)
 	p.x('// workspace %s', wks.name)
@@ -398,4 +330,5 @@ end
 print("Premake: loaded module android-studio")
 
 -- Return module interface
+p.modules.android_studio = m
 return m

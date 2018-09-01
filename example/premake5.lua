@@ -1,4 +1,4 @@
-require "android_studio_experimental"
+require "android_studio"
 
 workspace "android_studio_example"
 	configurations { "Debug", "Release" }
