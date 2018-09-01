@@ -2,9 +2,9 @@
 
 If you are using premake as your build configuration system for Visual Studio, XCode or GNU Make and wanted to easily integrate Android into your development work flow, this module will abstract the confusing world of gradle, sdk, ndk and jni.
 
-In addition to generating Android Studio friendly build.gradle files you can also build from the command line using gradle build. This will require manual installation of the Android sdk, ndk and gradle, for reference take a look at the [.travis.yml](https://github.com/polymonster/premake-android-studio/blob/master/.travis.yml) and [\_travis.sh](https://github.com/polymonster/premake-android-studio/blob/master/_travis.sh) files for how to setup a commandline enviromnent on osx.
-
 To find out how to use premake modules you can check the reference [here](https://github.com/premake/premake-core/wiki/Using-Modules), You can find the premake-core repository [here](https://github.com/premake/premake-core) and the latest premake executables [here](https://premake.github.io/download.html). 
+
+In addition to generating Android Studio friendly build.gradle files you can also build from the command line using gradle build. This will require manual installation of the Android sdk, ndk and gradle, for reference take a look at the [.travis.yml](https://github.com/polymonster/premake-android-studio/blob/master/.travis.yml) and [\_travis.sh](https://github.com/polymonster/premake-android-studio/blob/master/_travis.sh) files for how to setup a commandline enviromnent on osx.
 
 *This is still work in progress so may not contain all features of premake implemented in gradle or cmake.*
 
