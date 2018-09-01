@@ -57,13 +57,6 @@ p.api.register
 
 p.api.register 
 {
-	name = "androidbuildtoolsversion",
-	scope = "config",
-	kind = "string"
-}
-
-p.api.register 
-{
 	name = "androidminsdkversion",
 	scope = "config",
 	kind = "string"
