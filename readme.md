@@ -135,7 +135,8 @@ JNIEXPORT void JNICALL Java_com_as_example_main_1activity_hello_1cpp(void* args)
 }
 ```
 
-Naming convention for exported functions available to java is as follows:
+Naming convention for exported functions available to java is as follows:  
+
 Java_ <package_name_separated_by_underscores> function_name
 
 If an underscore is used in the function name this is replaced with "_1"
