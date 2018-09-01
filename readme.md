@@ -159,13 +159,15 @@ cd example
 ../premake5 android-studio
 ```
 
-Open the folder example/build with Android Studio then sync gradle, build and run from android studio. Output from run should contain:
+Open the folder example/build with Android Studio then sync gradle, build and run. Android Studio will manage any gradle, sdk or ndk dependencies for you. 
+
+Output from run should contain:
 ```bash
 D/Hello world!: I'm Java
 I/CPP: oh hai!, I'm c++
 ```
 
-You can alternatively build from the commandline with the following, provided you have installed the Android sdk and ndk:
+You can alternatively build from the commandline with the following, provided you have installed the Android sdk, ndk and gradle:
 ```bash
 cd example/build
 gradle build
