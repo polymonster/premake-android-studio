@@ -35,7 +35,7 @@ androiddependencies
 
 To link and .aar (Android Archive) or .jar (Java Archive) simply add them to links along with their extension:
 
-```bash
+```lua
 links
 {
   "android_archive.aar",
@@ -43,9 +43,18 @@ links
 }
 ```
 
-When adding .java files for the android project please note that only directories can be added and not single files, so the simplest way to avoid this is to put all java files inside their own directory:
+The same goes for library search paths for .aar or .jar files, simply add them to premake libdirs:
 
-```bash
+```lua
+libdirs
+{
+  "path/to/aar_libs"
+}
+```
+
+When adding .java files for the android project please note that only directories and not single files can be added to the project, by adding a directory it's entire subtree is also added (ie. "dir/\*\*.\*), this means if a directory contains non java files they will still be added to the java source set. The simplest way to avoid adding files to the wrong category is to put all java files inside their own directory:
+
+```lua
 files
 {
   "src/java/**.java"
@@ -54,7 +63,7 @@ files
 
 Resource files such as images and layouts must all be included from a sub directory named res:
 
-```bash
+```lua
 files
 {
   "src/res/**.*"
@@ -63,7 +72,7 @@ files
 
 AndroidManifest.xml is required for all projects, if one does not exist a simple stub will be auto generated, if an AndroidManifest.xml is specicied inside premake files then this one will be used instead:
 
-```bash
+```lua
 files
 {
   "src/manifest/AndroidManifest.xml"
@@ -72,7 +81,7 @@ files
 
 The module will dected files types based on extensions and add them into the appropriate categories:
 
-```bash
+```txt
 Native (.c, .h, .cpp, .hpp)
 Java (.java)
 Resource (.xml, .png)
@@ -81,6 +90,57 @@ Manifest (AndoridManifest.xml)
 Native files are added to cmake lists.
 Java, Resource and Manifest files are added to the gradle project.
 ```
+
+*****
+
+## JNI
+
+To call C++ from a Java file you must use jni (java native interface). This process requires importing a c or c++ lib from java, defining a function call and implementing the c or c++ function with the correct function name for java to find the exported function.
+
+Java:
+```java
+package com.as.example;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+
+public class main_activity extends Activity
+{
+	public static native int hello_cpp(); // declare c or c++ function (synonymous with c's extern)
+
+	static 
+	{
+		System.loadLibrary("android_studio_example"); // load c or c++ lib
+	}
+
+	@Override
+	protected void onCreate(Bundle arg0) 
+	{
+		Log.d("Hello world!", "I'm Java");
+
+		hello_cpp(); // call c or c++ function 
+
+		super.onCreate(arg0);
+	}
+}
+```
+
+C/C++
+```c
+extern "C"
+JNIEXPORT void JNICALL Java_com_as_example_main_1activity_hello_1cpp(void* args)
+{
+    __android_log_write(ANDROID_LOG_INFO, "CPP", "oh hai!, I'm c++");
+}
+```
+
+Naming convention for exported functions available to java is as follows:
+Java_ <package_name_separated_by_underscores> function_name
+
+If an underscore is used in the function name this is replaced with "_1"
+
+so for package com.as.example function hello_cpp becomes Java_com_as_example_main_1activity_hello_1cpp
 
 *****
 
