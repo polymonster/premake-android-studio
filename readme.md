@@ -151,7 +151,7 @@ so for package com.as.example function hello_cpp becomes Java_com_as_example_mai
 
 ## Example
 
-An example program is included for testing and reference purposes, it features a main activity, java function call and a jni call to native c++ code.
+An example program is included for testing and reference purposes, it features a main activity, a java entry point and a jni call to native c++ code.
 
 To run the example (osx only):
 ```bash
