@@ -1,2 +1,3 @@
 os: osx
-script: cd example && ../premake5 android-studio
+install: brew install gradle
+script: ./_travis.sh
