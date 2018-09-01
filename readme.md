@@ -2,6 +2,8 @@
 
 If you are using premake as your build system for Visual Studio, XCode or GNU Make and wanted to easily integrate Android into your development work flow, this module will abstract the confusing world of gradle, ndk, jni and Android Studio.
 
+**This is still work in progress so may not contain all features of premake implemented into gradle or cmake.
+
 You can find the latest premake executables [here](https://premake.github.io/download.html) and the premake-core repository [here](https://github.com/premake/premake-core)
 
 *****
@@ -95,7 +97,7 @@ Java, Resource and Manifest files are added to the gradle project.
 
 ## JNI
 
-To call C++ from a Java file you must use jni (java native interface). This process requires importing a c or c++ lib from java, defining a function call and implementing the c or c++ function with the correct function name for java to find the exported function.
+To call c++ from a Java file you must use jni (java native interface). This process requires importing a c or c++ lib from java, defining a function call and implementing the c or c++ function with the correct function name for java to find the exported function.
 
 Java:
 ```java
@@ -126,7 +128,7 @@ public class main_activity extends Activity
 }
 ```
 
-C/C++
+c/c++
 ```c
 extern "C"
 JNIEXPORT void JNICALL Java_com_as_example_main_1activity_hello_1cpp(void* args)
