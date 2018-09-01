@@ -96,7 +96,7 @@ I/CPP: oh hai!, I'm c++
 
 To run the example on Linux or Windows add your premake5 executable to this directory and follow the above steps.
 
-You can find the latest premake executables [https://premake.github.io/download.html](here)
+You can find the latest premake executables [here](https://premake.github.io/download.html)
 
 
 
