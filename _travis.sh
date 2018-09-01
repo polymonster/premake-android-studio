@@ -5,4 +5,4 @@ yes | sudo sdkmanager --licenses
 cd example
 ../premake5 android-studio
 cd build
-gradle build
+yes | gradle build
