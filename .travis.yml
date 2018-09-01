@@ -1,6 +1,6 @@
 os: osx
 install: 
-    -brew install gradle
-    -brew install android-sdk
-    -brew install android-ndk
+    - brew install gradle
+    - brew install android-sdk
+    - brew install android-ndk
 script: ./_travis.sh
