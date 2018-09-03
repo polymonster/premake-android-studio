@@ -174,7 +174,9 @@ function m.generate_cmake_lists(prj)
 
 	cmake_kind = get_cmake_program_kind(prj.kind)
 	for cfg in project.eachconfig(prj) do
-		
+		-- somehow gradle wants lowecase debug / release but 
+		-- still passes "Debug" and "Release" to cmake
+		p.x('if(CMAKE_BUILD_TYPE STREQUAL "%s")', cfg.name)
 		-- target				
 		local file_list = ""
 		for _, file in ipairs(cfg.files) do
@@ -235,7 +237,8 @@ function m.generate_cmake_lists(prj)
 			p.x('target_compile_definitions(%s PUBLIC %s)', prj.name, defines)
 		end
 		
-		break
+		p.w('endif()')
+		
 	end
 end
 
@@ -244,6 +247,16 @@ function m.generate_project(prj)
 	p.x("apply plugin: '%s'", get_android_program_kind(prj.kind))
 	
 	p.push('android {')
+	
+	-- signing config for release builds
+	p.push('signingConfigs {')
+	p.push('config {')
+	p.w("keyAlias 'key'")
+	p.w("keyPassword 'password'")
+	p.w("storePassword 'password'")
+	p.w("storeFile file('android.jks')")
+	p.pop('}') -- config
+	p.pop('}') -- signingConfigs
 	
 	-- sdk / ndk etc
 	for cfg in project.eachconfig(prj) do
@@ -267,6 +280,8 @@ function m.generate_project(prj)
 	p.push('buildTypes {')
 	for cfg in project.eachconfig(prj) do
 		p.push(string.lower(cfg.name) .. ' {')
+		-- todo:
+		-- p.w('signingConfig signingConfigs.config')
 		p.pop('}') -- cfg.name
 	end
 	p.pop('}') -- build types

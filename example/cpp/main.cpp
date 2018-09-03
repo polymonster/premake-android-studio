@@ -3,5 +3,9 @@
 extern "C"
 JNIEXPORT void JNICALL Java_com_as_example_main_1activity_hello_1cpp(void* args)
 {
-    __android_log_write(ANDROID_LOG_INFO, "CPP", "oh hai!, I'm c++");
+#ifdef DEBUG
+    __android_log_write(ANDROID_LOG_INFO, "CPP", "oh hai!, I'm c++ (Debug Mode)");
+#else
+    __android_log_write(ANDROID_LOG_INFO, "CPP", "oh hai!, I'm c++ (Release Mode)");
+#endif
 }
