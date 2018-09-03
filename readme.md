@@ -1,8 +1,10 @@
 # premake-android-studio [![Build Status](https://travis-ci.org/polymonster/premake-android-studio.svg?branch=master)](https://travis-ci.org/polymonster/premake-android-studio)
 
-If you are using premake as your build configuration system for Visual Studio, XCode or GNU Make and wanted to easily integrate Android into your development work flow, this module will abstract the confusing world of gradle, ndk, jni and Android Studio.
+If you are using premake as your build configuration system for Visual Studio, XCode or GNU Make and wanted to easily integrate Android into your development work flow, this module will abstract the convoluted world of gradle, sdk and ndk.
 
 To find out how to use premake modules you can check the reference [here](https://github.com/premake/premake-core/wiki/Using-Modules), You can find the premake-core repository [here](https://github.com/premake/premake-core) and the latest premake executables [here](https://premake.github.io/download.html). 
+
+In addition to generating Android Studio friendly build.gradle files you can also build from the command line using gradle build. This will require manual installation of the Android sdk, ndk and gradle, for reference take a look at the [.travis.yml](https://github.com/polymonster/premake-android-studio/blob/master/.travis.yml) and [\_travis.sh](https://github.com/polymonster/premake-android-studio/blob/master/_travis.sh) files for how to setup a commandline enviromnent on osx.
 
 *This is still work in progress so may not contain all features of premake implemented in gradle or cmake.*
 
@@ -149,7 +151,7 @@ so for package com.as.example function hello_cpp becomes Java_com_as_example_mai
 
 ## Example
 
-An example program is included for testing and reference purposes, it features a main activity, java function call and a jni call to native c++ code.
+An example program is included for testing and reference purposes, it features a main activity, a java entry point and a jni call to native c++ code.
 
 To run the example (osx only):
 ```bash
@@ -157,10 +159,18 @@ cd example
 ../premake5 android-studio
 ```
 
-Open the folder example/build with Android Studio then sync gradle, build and run from android studio. Output from run should contain:
+Open the folder example/build with Android Studio then sync gradle, build and run. Android Studio will manage any gradle, sdk or ndk dependencies for you. 
+
+Output from run should contain:
 ```bash
 D/Hello world!: I'm Java
 I/CPP: oh hai!, I'm c++
+```
+
+You can alternatively build from the commandline with the following, provided you have installed the Android sdk, ndk and gradle:
+```bash
+cd example/build
+gradle build
 ```
 
 To run the example on Linux or Windows add your premake5 executable to this directory and follow the above steps.
