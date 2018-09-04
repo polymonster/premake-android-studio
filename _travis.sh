@@ -5,7 +5,7 @@ brew tap caskroom/versions
 brew cask install java8
 touch ~/.android/repositories.cfg
 brew cask install android-sdk
-brew cask install https://raw.githubusercontent.com/commitay/homebrew-cask/03c79bb9b18850c1d042434f07c6095e9612d368/Casks/android-ndk.rb
+brew cask install android-ndk --no-quarantine
 
 export ANDROID_HOME="/usr/local/share/android-sdk"
 export ANDROID_NDK_HOME="/usr/local/share/android-ndk"
