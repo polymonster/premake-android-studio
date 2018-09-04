@@ -86,9 +86,11 @@ end
 function get_cmake_program_kind(premake_kind)
 	local premake_to_cmake_kind =
 	{
+		-- currently only shared libs will be built.
+		-- android development is abhorrent and restrictive.
 		["WindowedApp"] = "SHARED",
 		["ConsoleApp"] = "SHARED",
-		["StaticLib"] = "STATIC",
+		["StaticLib"] = "SHARED",
 		["SharedLib"] = "SHARED"
 	}
 	return premake_to_cmake_kind[premake_kind]
@@ -171,7 +173,16 @@ function m.generate_cmake_lists(prj)
 		".h",
 		".hpp"	
 	}
-
+	
+	-- todo need to find dependant cmakelists
+	-- and include them
+	--[[
+	wks = prj.workspace
+	for prj in workspace.eachproject(wks) do
+		print(prj.location)
+	end
+	--]]
+	
 	cmake_kind = get_cmake_program_kind(prj.kind)
 	for cfg in project.eachconfig(prj) do
 		-- somehow gradle wants lowecase debug / release but 
@@ -318,7 +329,7 @@ function m.generate_project(prj)
 		for _, link in ipairs(config.getlinks(cfg, "system", "fullpath")) do
 			ext = path.getextension(link)
 			if ext == ".aar" or ext == ".jar" then
-				p.x("compile (name:'%s', ext:'%s')", path.getbasename(link), ext:sub(2, 4))
+				p.x("implementation (name:'%s', ext:'%s')", path.getbasename(link), ext:sub(2, 4))
 			end
 		end
 		break
@@ -328,7 +339,7 @@ function m.generate_project(prj)
 	for cfg in project.eachconfig(prj) do
 		if cfg.androiddependencies then
 			for _, dep in ipairs(cfg.androiddependencies) do
-				p.x("compile '%s'", dep)
+				p.x("implementation '%s'", dep)
 			end
 		end
 		break
@@ -336,7 +347,7 @@ function m.generate_project(prj)
 	
 	-- project compile links
 	for _, dep in ipairs(project.getdependencies(prj, "dependOnly")) do
-		p.x("compile project(':%s')", dep.name)
+		p.x("implementation project(':%s')", dep.name)
 	end
 	
 	p.pop('}') -- dependencies
