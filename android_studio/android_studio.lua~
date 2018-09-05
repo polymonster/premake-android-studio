@@ -243,10 +243,7 @@ function m.generate_cmake_lists(prj)
 		
 		-- links
 		for _, link in ipairs(config.getlinks(cfg, "system", "fullpath")) do
-			ext = path.getextension(link)
-			if ext ~= ".aar" and ext ~= ".jar" then
-				d_flags = (ld_flags .. " " .. link)
-			end
+			ld_flags = (ld_flags .. " " .. link)
 		end
 		
 		-- project / dependency links
