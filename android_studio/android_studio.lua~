@@ -245,7 +245,7 @@ function m.generate_cmake_lists(prj)
 		for _, link in ipairs(config.getlinks(cfg, "system", "fullpath")) do
 			ext = path.getextension(link)
 			if ext ~= ".aar" and ext ~= ".jar" then
-				ld_flags = (ld_flags .. " " .. link)
+				d_flags = (ld_flags .. " " .. link)
 			end
 		end
 		
