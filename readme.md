@@ -37,6 +37,8 @@ androiddependencies
 
 ## Android specific premake considerations
 
+Currently CMake and gradle will only build shared libraries (.so), even if you specify static libarry in the cmake config). This is frustrating and needs to be addressed but so far cannot find a way around the issue.
+
 To link and .aar (Android Archive) or .jar (Java Archive) simply add them to links along with their extension:
 
 ```lua
