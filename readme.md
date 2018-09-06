@@ -18,7 +18,9 @@ premake5 android-studio
 *****
 
 ## Android specific premake extensions
-```bash
+```lua
+androidabis "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+
 gradleversion "com.android.tools.build:gradle:3.1.4"
 
 androidsdkversion "28"
@@ -27,9 +29,15 @@ androidminsdkversion "25"
 
 androiddependencies
 {
-  "com.android.support:appcompat-v7:+", 
-  "com.android.support:support-v4:25.0.0",
-  "com.android.support:design:25.0.0"
+    "com.android.support:appcompat-v7:+", 
+    "com.android.support:support-v4:25.0.0",
+    "com.android.support:design:25.0.0"
+}
+
+archivedirs
+{
+    "path/to/jar/",
+    "path/to/aar/"
 }
 ```
 
@@ -39,22 +47,33 @@ androiddependencies
 
 Currently CMake and gradle will only build shared libraries (.so), even if you specify static library in the cmake config. This is frustrating and needs to be addressed but so far it seems like an issue that needs to be solved outside of gradle.
 
+You can use CMake variables injected specifically for android from within the premake script to make life easier to handle multiple abis and so forth.
+
+```lua
+libdirs
+{
+    "path/to/libs/${ANDROID_ABI}/"
+}
+```
+
+Find a full list of CMake Android variables [here](https://gist.github.com/nddrylliog/4774829)
+
 To link and .aar (Android Archive) or .jar (Java Archive) simply add them to links along with their extension:
 
 ```lua
 links
 {
-  "android_archive.aar",
-  "java_archive.jar"
+    "android_archive.aar",
+    "java_archive.jar"
 }
 ```
 
-The same goes for library search paths for .aar or .jar files, simply add them to premake libdirs:
+To add a directory to search for .aar or .jar files add these to archivedirs:
 
 ```lua
-libdirs
+archivedirs
 {
-  "path/to/aar_libs"
+    "path/to/aar_libs"
 }
 ```
 
@@ -63,7 +82,7 @@ When adding .java files for the android project please note that only directorie
 ```lua
 files
 {
-  "src/java/**.java"
+    "src/java/**.java"
 }
 ```
 
@@ -72,7 +91,7 @@ Resource files such as images and layouts must all be included from a sub direct
 ```lua
 files
 {
-  "src/res/**.*"
+    "src/res/**.*"
 }
 ```
 
@@ -81,7 +100,7 @@ AndroidManifest.xml is required for all projects, if one does not exist a simple
 ```lua
 files
 {
-  "src/manifest/AndroidManifest.xml"
+    "src/manifest/AndroidManifest.xml"
 }
 ```
 
