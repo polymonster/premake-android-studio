@@ -151,7 +151,7 @@ public class main_activity extends Activity
 }
 ```
 
-c/c++
+C/C++
 ```c
 extern "C"
 JNIEXPORT void JNICALL Java_com_as_example_main_1activity_hello_1cpp(void* args)
