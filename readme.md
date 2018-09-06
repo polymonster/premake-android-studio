@@ -63,8 +63,8 @@ To link and .aar (Android Archive) or .jar (Java Archive) simply add them to lin
 ```lua
 links
 {
-  "android_archive.aar",
-  "java_archive.jar"
+    "android_archive.aar",
+    "java_archive.jar"
 }
 ```
 
@@ -73,7 +73,7 @@ To add a directory to search for .aar or .jar files add these to archivedirs:
 ```lua
 archivedirs
 {
-  "path/to/aar_libs"
+    "path/to/aar_libs"
 }
 ```
 
@@ -82,7 +82,7 @@ When adding .java files for the android project please note that only directorie
 ```lua
 files
 {
-  "src/java/**.java"
+    "src/java/**.java"
 }
 ```
 
@@ -91,7 +91,7 @@ Resource files such as images and layouts must all be included from a sub direct
 ```lua
 files
 {
-  "src/res/**.*"
+    "src/res/**.*"
 }
 ```
 
@@ -100,7 +100,7 @@ AndroidManifest.xml is required for all projects, if one does not exist a simple
 ```lua
 files
 {
-  "src/manifest/AndroidManifest.xml"
+    "src/manifest/AndroidManifest.xml"
 }
 ```
 
