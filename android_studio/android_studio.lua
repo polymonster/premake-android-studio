@@ -39,21 +39,21 @@ function m.generate_workspace(wks)
 	p.w('jcenter()')
 	p.w('google()')
 	
-	-- add lib dirs from linking .aar or .jar files
+	-- lib dirs for .aar and .jar files
 	dir_list = nil
 	for prj in workspace.eachproject(wks) do
-		for cfg in project.eachconfig(prj) do
-			for _, libdir in ipairs(cfg.libdirs) do
+		if prj.archivedirs then
+			for _, dir in ipairs(prj.archivedirs) do
 				if dir_list == nil then
 					dir_list = ""
 				else
 					dir_list = (dir_list .. ', ')
 				end
-				dir_list = (dir_list .. '"' .. libdir .. '"')
+				dir_list = (dir_list .. '"' .. dir .. '"')
 			end
 		end
 	end
-	
+			
 	if dir_list then
 		p.push('flatDir {')
 		p.x('dirs %s', dir_list)
@@ -298,23 +298,38 @@ function m.generate_project(prj)
 	p.pop('}') -- signingConfigs
 	
 	-- sdk / ndk etc
-	for cfg in project.eachconfig(prj) do
-		-- set defaults
-		if cfg.androidsdkversion == nil then
-			cfg.androidsdkversion = "25"
-		end
-		if cfg.androidminsdkversion == nil then
-			cfg.androidminsdkversion = "19"
-		end		
-		p.x('compileSdkVersion %s', cfg.androidsdkversion)
-		p.push('defaultConfig {')
-		p.x('minSdkVersion %s', cfg.androidminsdkversion)
-		p.x('targetSdkVersion %s', cfg.androidsdkversion)
-		p.w('versionCode 1')
-		p.w('versionName "1.0"')
-		p.pop('}') -- defaultConfig.with 
-		break
+	if prj.androidsdkversion == nil then
+		prj.androidsdkversion = "25"
 	end
+	if prj.androidminsdkversion == nil then
+		prj.androidminsdkversion = "19"
+	end		
+	
+	p.x('compileSdkVersion %s', prj.androidsdkversion)
+	
+	p.push('defaultConfig {')
+	p.x('minSdkVersion %s', prj.androidminsdkversion)
+	p.x('targetSdkVersion %s', prj.androidsdkversion)
+	p.w('versionCode 1')
+	p.w('versionName "1.0"')
+	
+	-- abis
+	if prj.androidabis then
+		abi_list = nil
+		for _, abi in ipairs(prj.androidabis) do
+			if abi_list == nil then
+				abi_list = ""
+			else
+				abi_list = (abi_list .. ", ")
+			end
+			abi_list = (abi_list .. '"' .. abi .. '"')
+		end
+		if abi_list then
+			p.x('abiFilters %s', abi_list)
+		end
+	end
+	
+	p.pop('}') -- defaultConfig 
 			
 	p.push('buildTypes {')
 	for cfg in project.eachconfig(prj) do
@@ -364,13 +379,10 @@ function m.generate_project(prj)
 	end
 	
 	-- android dependencies
-	for cfg in project.eachconfig(prj) do
-		if cfg.androiddependencies then
-			for _, dep in ipairs(cfg.androiddependencies) do
-				p.x("implementation '%s'", dep)
-			end
+	if prj.androiddependencies then
+		for _, dep in ipairs(prj.androiddependencies) do
+			p.x("implementation '%s'", dep)
 		end
-		break
 	end
 	
 	-- project compile links

@@ -36,6 +36,20 @@ newaction {
 
 p.api.register 
 {
+	name = "androidabis",
+	scope = "project",
+	kind = "list:string",
+	allowed = {
+		"armeabi",
+		"armeabi-v7a",
+		"arm64-v8a",
+		"x86",
+		"x86_64"
+	}
+}
+
+p.api.register 
+{
 	name = "gradleversion",
 	scope = "workspace",
 	kind = "string"
@@ -44,20 +58,27 @@ p.api.register
 p.api.register 
 {
 	name = "androiddependencies",
-	scope = "config",
+	scope = "project",
 	kind = "list:string"
 }
 
 p.api.register 
 {
 	name = "androidsdkversion",
-	scope = "config",
+	scope = "project",
 	kind = "string"
 }
 
 p.api.register 
 {
 	name = "androidminsdkversion",
-	scope = "config",
+	scope = "project",
 	kind = "string"
+}
+
+p.api.register 
+{
+	name = "archivedirs",
+	scope = "project",
+	kind = "list:directory"
 }
