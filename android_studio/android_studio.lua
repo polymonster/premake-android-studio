@@ -314,8 +314,8 @@ function m.generate_project(prj)
 	p.w('versionName "1.0"')
 	
 	-- abis
+	abi_list = nil
 	if prj.androidabis then
-		abi_list = nil
 		for _, abi in ipairs(prj.androidabis) do
 			if abi_list == nil then
 				abi_list = ""
@@ -323,9 +323,6 @@ function m.generate_project(prj)
 				abi_list = (abi_list .. ", ")
 			end
 			abi_list = (abi_list .. '"' .. abi .. '"')
-		end
-		if abi_list then
-			p.x('abiFilters %s', abi_list)
 		end
 	end
 	
@@ -336,6 +333,11 @@ function m.generate_project(prj)
 		p.push(string.lower(cfg.name) .. ' {')
 		-- todo:
 		-- p.w('signingConfig signingConfigs.config')
+		if abi_list then
+			p.push('ndk {')
+			p.x('abiFilters %s', abi_list)
+			p.pop('}')
+		end
 		p.pop('}') -- cfg.name
 	end
 	p.pop('}') -- build types
