@@ -330,19 +330,6 @@ function m.generate_project(prj)
 	-- abis
 	abi_list = m.csv_string_from_table(prj.androidabis)
 	
-	--[[
-	if prj.androidabis then
-		for _, abi in ipairs(prj.androidabis) do
-			if abi_list == nil then
-				abi_list = ""
-			else
-				abi_list = (abi_list .. ", ")
-			end
-			abi_list = (abi_list .. '"' .. abi .. '"')
-		end
-	end
-	--]]
-	
 	p.pop('}') -- defaultConfig 
 			
 	p.push('buildTypes {')
