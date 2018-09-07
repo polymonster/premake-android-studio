@@ -39,6 +39,11 @@ archivedirs
     "path/to/jar/",
     "path/to/aar/"
 }
+
+assetdirs
+{
+    "path/to/assets" -- these will go into android asset manager and iside .pkg
+}
 ```
 
 *****
