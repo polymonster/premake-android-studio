@@ -45,8 +45,6 @@ archivedirs
 
 ## Android specific premake considerations
 
-Currently CMake and gradle will only build shared libraries (.so), even if you specify static library in the cmake config. This is frustrating and needs to be addressed but so far it seems like an issue that needs to be solved outside of gradle.
-
 You can use CMake variables injected specifically for android from within the premake script to make life easier to handle multiple abis and so forth.
 
 ```lua
