@@ -82,3 +82,10 @@ p.api.register
 	scope = "project",
 	kind = "list:directory"
 }
+
+p.api.register 
+{
+	name = "assetdirs",
+	scope = "project",
+	kind = "list:directory"
+}

@@ -36,6 +36,11 @@ project "android_studio_example"
 	{
 		"h"
 	}
+	
+	androidabis
+	{
+		"armeabi-v7a", "x86"
+	}
 
 	configuration "Debug"
 		defines { "DEBUG" }

@@ -86,12 +86,11 @@ end
 function get_cmake_program_kind(premake_kind)
 	local premake_to_cmake_kind =
 	{
-		-- currently only shared libs will be built.
-		-- android development is abhorrent and restrictive.
+		-- native components of applications are shared libs
 		["WindowedApp"] = "SHARED",
 		["ConsoleApp"] = "SHARED",
-		["StaticLib"] = "SHARED",
-		["SharedLib"] = "SHARED"
+		["SharedLib"] = "SHARED",
+		["StaticLib"] = "STATIC"
 	}
 	return premake_to_cmake_kind[premake_kind]
 end
@@ -160,6 +159,21 @@ function m.add_sources(cfg, category, exts, excludes, strip)
 	if dir_list then 
 		p.x((category .. '.srcDirs += [%s]'), dir_list)
 	end
+end
+
+function m.csv_string_from_table(tab)
+	csv_list = nil
+	if tab then
+		for _, v in ipairs(tab) do
+			if csv_list == nil then
+				csv_list = ""
+			else
+				csv_list = (csv_list .. ", ")
+			end
+			csv_list = (csv_list .. '"' .. v .. '"')
+		end
+	end
+	return csv_list
 end
 	
 function m.generate_cmake_lists(prj)
@@ -314,7 +328,9 @@ function m.generate_project(prj)
 	p.w('versionName "1.0"')
 	
 	-- abis
-	abi_list = nil
+	abi_list = m.csv_string_from_table(prj.androidabis)
+	
+	--[[
 	if prj.androidabis then
 		for _, abi in ipairs(prj.androidabis) do
 			if abi_list == nil then
@@ -325,6 +341,7 @@ function m.generate_project(prj)
 			abi_list = (abi_list .. '"' .. abi .. '"')
 		end
 	end
+	--]]
 	
 	p.pop('}') -- defaultConfig 
 			
@@ -349,8 +366,18 @@ function m.generate_project(prj)
 	p.pop('}') -- cmake
 	p.pop('}') -- externalNativeBuild
 	
-	-- java and resource files
 	p.push('sourceSets {')
+	
+	-- assets
+	asset_dirs = m.csv_string_from_table(prj.assetdirs)
+
+	if asset_dirs then
+		p.push('main {')
+		p.x('assets.srcDirs += [%s]', asset_dirs)
+		p.pop('}')
+	end
+	
+	-- java and resource files
 	for cfg in project.eachconfig(prj) do
 		p.push(string.lower(cfg.name) .. ' {')
 		m.add_sources(cfg, 'java', {'.java'}, {})
