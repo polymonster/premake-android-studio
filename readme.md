@@ -42,7 +42,7 @@ archivedirs
 
 assetdirs
 {
-    "path/to/assets" -- these will go into android asset manager and iside .pkg
+    "path/to/assets" -- these will go into android asset manager and inside .pkg
 }
 
 androidkeystorefile "keystore.jks"
