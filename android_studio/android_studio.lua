@@ -104,12 +104,7 @@ function m.generate_manifest(prj)
 	for cfg in project.eachconfig(prj) do		
 		for _, file in ipairs(cfg.files) do
 			if string.find(file, "AndroidManifest.xml") then
-				-- copy contents of manifest and write with premake
-				manifest = io.open(file, "r")
-				xml = manifest:read("*a")
-				manifest:close()
-				p.w(xml)
-				return
+				-- return
 			end
 		end
 	end
@@ -120,7 +115,6 @@ function m.generate_manifest(prj)
 	p.x('package="lib.%s"', prj.name)
 	p.w('android:versionCode="1"')
 	p.w('android:versionName="1.0" >')
-	p.w('<uses-sdk android:minSdkVersion="19" />')
 	p.pop('<application/>')
 	p.pop('</manifest>')
 end
@@ -301,16 +295,26 @@ function m.generate_project(prj)
 	
 	p.push('android {')
 	
+	complete_signing_info = false
+	if prj.androidkeyalias and 
+	   prj.androidkeystorefile and 
+	   androidkeypassword and 
+	   androidstorepassword then
+	   complete_signing_info = true
+	end
+		
 	-- signing config for release builds
-	p.push('signingConfigs {')
-	p.push('config {')
-	p.w("keyAlias 'key'")
-	p.w("keyPassword 'password'")
-	p.w("storePassword 'password'")
-	p.w("storeFile file('android.jks')")
-	p.pop('}') -- config
-	p.pop('}') -- signingConfigs
-	
+	if complete_signing_info then
+		p.push('signingConfigs {')
+		p.push('config { ')
+		p.x("keyAlias '%s'", prj.androidkeyalias)
+		p.x("keyPassword '%s'", prj.androidkeypassword)
+		p.x("storePassword '%s'", prj.androidstorepassword)
+		p.x("storeFile file('%s')", prj.androidkeystorefile)
+		p.pop('}') -- config
+		p.pop('}') -- signingConfigs
+	end
+
 	-- sdk / ndk etc
 	if prj.androidsdkversion == nil then
 		prj.androidsdkversion = "25"
@@ -327,11 +331,14 @@ function m.generate_project(prj)
 	p.w('versionCode 1')
 	p.w('versionName "1.0"')
 	
-	-- abis
-	abi_list = m.csv_string_from_table(prj.androidabis)
+	if complete_signing_info then
+		p.x('signingConfig signingConfigs.config')
+	end
 	
 	p.pop('}') -- defaultConfig 
 			
+	-- abis
+	abi_list = m.csv_string_from_table(prj.androidabis)
 	p.push('buildTypes {')
 	for cfg in project.eachconfig(prj) do
 		p.push(string.lower(cfg.name) .. ' {')
@@ -361,6 +368,11 @@ function m.generate_project(prj)
 	if asset_dirs then
 		p.push('main {')
 		p.x('assets.srcDirs += [%s]', asset_dirs)
+				
+		if prj.androidmanifest then
+			p.x('manifest.srcFile "%s"', prj.androidmanifest)
+		end
+		
 		p.pop('}')
 	end
 	

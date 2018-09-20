@@ -28,7 +28,9 @@ newaction {
 	end,
 
 	onProject = function(prj)
+	if prj.androidmanifest == nil then
 		p.generate(prj, prj.name .. "/src/main/AndroidManifest.xml",  p.modules.android_studio.generate_manifest)
+	end
 		p.generate(prj, prj.name .. "/build.gradle",  p.modules.android_studio.generate_project)
 		p.generate(prj, prj.name .. "/CMakeLists.txt",  p.modules.android_studio.generate_cmake_lists)
 	end
@@ -78,6 +80,13 @@ p.api.register
 
 p.api.register 
 {
+	name = "androidmanifest",
+	scope = "project",
+	kind = "file"
+}
+
+p.api.register 
+{
 	name = "archivedirs",
 	scope = "project",
 	kind = "list:directory"
@@ -88,4 +97,32 @@ p.api.register
 	name = "assetdirs",
 	scope = "project",
 	kind = "list:directory"
+}
+
+p.api.register
+{
+	name = "androidkeystorefile",
+	scope = "project",
+	kind = "file"
+}
+
+p.api.register 
+{
+	name = "androidkeyalias",
+	scope = "project",
+	kind = "string"
+}
+
+p.api.register 
+{
+	name = "androidkeypassword",
+	scope = "project",
+	kind = "string"
+}
+
+p.api.register 
+{
+	name = "androidstorepassword",
+	scope = "project",
+	kind = "string"
 }
