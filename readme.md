@@ -19,7 +19,7 @@ premake5 android-studio
 
 ## Android specific premake extensions
 ```lua
-androidabis "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+androidabis { "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64" }
 
 gradleversion "com.android.tools.build:gradle:3.1.4"
 
@@ -44,6 +44,15 @@ assetdirs
 {
     "path/to/assets" -- these will go into android asset manager and iside .pkg
 }
+
+androidkeystorefile "keystore.jks"
+
+androidstorepassword "K3yStorePa55w0rd"
+
+androidkeyalias "Product Key"
+
+androidkeypassword "Pr0ductK3yPa$$word"
+
 ```
 
 *****
