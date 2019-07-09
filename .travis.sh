@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-echo $ANDROID_HOME
-cd $ANDROID_HOME
-ls
+sudo apt install android-sdk
+ls $ANDROID_HOME
 
