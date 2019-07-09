@@ -101,13 +101,18 @@ end
 
 function m.generate_manifest(prj)
     -- look for a manifest in project files
-    for cfg in project.eachconfig(prj) do        
-        for _, file in ipairs(cfg.files) do
-            if string.find(file, "AndroidManifest.xml") then
-                -- return
-            end
-        end
-    end
+	for cfg in project.eachconfig(prj) do		
+		for _, file in ipairs(cfg.files) do
+			if string.find(file, "AndroidManifest.xml") then
+				-- copy contents of manifest and write with premake
+				manifest = io.open(file, "r")
+				xml = manifest:read("*a")
+				manifest:close()
+				p.w(xml)
+				return
+			end
+		end
+	end
 
     -- auto generate stub android manifest
     p.w('<?xml version="1.0" encoding="utf-8"?>')
