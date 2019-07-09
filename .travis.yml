@@ -1,15 +1,6 @@
-language: android
-sudo: true
-android:
-  components:
-    - tools
-    - platform-tools
-    - extra-google-m2repository
-    - extra-android-m2repository
-addons:
-  apt_packages:
-    - pandoc
-before_install:
-  - sudo apt-get install ant
-script:
-  - ./.travis.sh
+os: osx
+install: 
+    - brew install ant
+    - brew install maven
+    - brew install gradle
+script: ./.travis.sh
