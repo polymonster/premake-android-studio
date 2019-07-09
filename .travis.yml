@@ -1,6 +1,6 @@
 os: osx
 install: 
     - brew install ant
-    - brew install maven
+    - brew upgrade maven
     - brew install gradle
 script: ./.travis.sh
