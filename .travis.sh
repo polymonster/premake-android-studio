@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-sudo apt install android-sdk
-ls $ANDROID_HOME
+brew cask install android-sdk
+yes | sudo sdkmanager --licenses
 
