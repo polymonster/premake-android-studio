@@ -12,4 +12,4 @@ addons:
 before_install:
   - sudo apt-get install ant
 script:
-  - ./_travis.sh
+  - ./.travis.sh
