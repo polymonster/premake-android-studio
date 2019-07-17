@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
-brew cask install android-sdk
-yes | sudo sdkmanager --add-modules java.xml.bind --licenses
+
+# this script no longer works on ci because android sdk manager crashes with java9+ and java8 can no longer be installed via home brew.
+# to succesfully install android sdk and ndk get android studio and it will install them for you, you can then use the commandline.
+
+cd example/build
+gradle build --stacktrace
 
