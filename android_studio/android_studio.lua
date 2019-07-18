@@ -238,6 +238,9 @@ function m.generate_cmake_lists(prj)
         
         -- compile options
         local compile_options = ""
+        for _, flag in ipairs(cfg.buildoptions) do
+            compile_options = compile_options .. " " .. flag
+        end
         local cpp_flags = toolset.getcxxflags(cfg)
         if cpp_flags then
             compile_options = compile_options .. " " .. table.concat(cpp_flags, " ")
