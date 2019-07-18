@@ -232,52 +232,43 @@ function m.generate_cmake_lists(prj)
         if include_dirs ~= "" then
             p.x('target_include_directories(%s PUBLIC %s)', prj.name, include_dirs)
         end
-        
-        -- cpp flags
-        local cpp_flags = ""
-        for _, cppflag in ipairs(cfg.buildoptions) do
-            cpp_flags = (cpp_flags .. " " .. cppflag)
-        end
-        
-        --optimises
-        local opt_map = { On = 3, Size = 's', Speed = 3, Full = 'fast', Debug = 1 }
-        opt_level = opt_map[cfg.optimize] 
-        if opt_level then
-            opt_flag = ("-O" .. opt_level)
-            cpp_flags = (cpp_flags .. " " .. opt_flag)
-        end
 
-        if cpp_flags ~= "" then
-            p.x('target_compile_options(%s PUBLIC %s)', prj.name, cpp_flags)
+        -- toolset
+        local toolset = p.tools[cfg.toolset or "gcc"]
+        
+        -- compile options
+        local compile_options = ""
+        local c_flags = toolset.getcflags(cfg)
+        if c_flags then
+            compile_options = compile_options .. table.concat(c_flags, " ")
+        end
+        local cpp_flags = toolset.getcxxflags(cfg)
+        if cpp_flags then
+            compile_options = compile_options .. " " .. table.concat(cpp_flags, " ")
+        end
+        if #compile_options > 0 then
+            p.x('target_compile_options(%s PUBLIC %s)', prj.name, compile_options)
         end
         
-        -- ld flags
-        local ld_flags = ""
-        
-        -- links
-        for _, link in ipairs(config.getlinks(cfg, "system", "fullpath")) do
-            ext = path.getextension(link)
-            if ext ~= ".aar" and ext ~= ".jar" then
-                ld_flags = (ld_flags .. " " .. link)
-            end
+        -- linker options
+        local linker_options = ""
+        if project_deps then
+            linker_options = linker_options .. project_deps
         end
-        
-        -- project / dependency links
-        if project_deps ~= "" then
-            ld_flags = (ld_flags .. " " .. project_deps)
+        local ld_flags = toolset.getldflags(cfg)
+        if ld_flags then
+            linker_options = linker_options .. " " .. table.concat(ld_flags, " ")
         end
-        
-        for _, ldflag in ipairs(cfg.linkoptions) do
-            ld_flags = (ld_flags .. " " .. ldflag)
+        local library_directories = toolset.getLibraryDirectories(cfg)
+        if library_directories then
+            linker_options = linker_options .. " " .. table.concat(library_directories, " ")
         end
-        
-        -- lib directories
-        for _, libdir in ipairs(cfg.libdirs) do
-            ld_flags = (ld_flags .. " -L" .. libdir)
+        local links = toolset.getlinks(cfg, "system", "fullpath")
+        if links then
+            linker_options = linker_options .. " " .. table.concat(links, " ")
         end
-        
-        if ld_flags ~= "" then
-            p.x('target_link_libraries(%s %s)', prj.name, ld_flags)
+        if #linker_options > 0 then
+            p.x('target_link_libraries(%s %s)', prj.name, linker_options)
         end
         
         -- defines
