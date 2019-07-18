@@ -197,7 +197,10 @@ function m.generate_cmake_lists(prj)
                 local f = io.open(cmakef,"r")
                 if f ~= nil then 
                     io.close(f)
+                    -- Guarantee that we aren't defining the project more than once
+                    p.x('if(NOT TARGET %s)', prj.name)
                     p.x('include(%s)', cmakef)
+                    p.x('endif()')
                     project_deps = (project_deps .. " " .. prj.name)
                 end
             end 
