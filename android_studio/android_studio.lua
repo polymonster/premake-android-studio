@@ -189,7 +189,7 @@ function m.generate_cmake_lists(prj)
     local project_deps = ""
     
     -- include cmake dependencies
-    for _, dep in ipairs(project.getdependencies(prj, "dependOnly")) do
+    for _, dep in ipairs(project.getdependencies(prj)) do
         wks = prj.workspace
         for prj in workspace.eachproject(wks) do
             if prj.name == dep.name then
