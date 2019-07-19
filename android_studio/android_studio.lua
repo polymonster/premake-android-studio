@@ -241,9 +241,17 @@ function m.generate_cmake_lists(prj)
         for _, flag in ipairs(cfg.buildoptions) do
             compile_options = compile_options .. " " .. flag
         end
-        local cpp_flags = toolset.getcxxflags(cfg)
-        if cpp_flags then
-            compile_options = compile_options .. " " .. table.concat(cpp_flags, " ")
+        -- language-dependant flags
+        if p.project.isc(prj) then
+            local c_flags = toolset.getcflags(cfg)
+            if c_flags then
+                compile_options = compile_options .. " " .. table.concat(c_flags, " ")
+            end
+        elseif p.project.iscpp(prj) then
+            local cpp_flags = toolset.getcxxflags(cfg)
+            if cpp_flags then
+                compile_options = compile_options .. " " .. table.concat(cpp_flags, " ")
+            end
         end
         if #compile_options > 0 then
             p.x('target_compile_options(%s PUBLIC %s)', prj.name, compile_options)
