@@ -235,26 +235,22 @@ function m.generate_cmake_lists(prj)
 
         -- toolset
         local toolset = p.tools[cfg.toolset or "gcc"]
+
+        -- C flags
+        local c_flags = toolset.getcflags(cfg)
+        if #c_flags > 0 then
+            p.w('set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} %s")', table.concat(c_flags, " "))
+        end
         
-        -- compile options
-        local compile_options = ""
-        for _, flag in ipairs(cfg.buildoptions) do
-            compile_options = compile_options .. " " .. flag
+        -- C++ flags
+        local cxx_flags = toolset.getcxxflags(cfg)
+        if #cxx_flags > 0 then
+            p.w('set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} %s")', table.concat(cxx_flags, " "))
         end
-        -- language-dependant flags
-        if p.project.isc(prj) then
-            local c_flags = toolset.getcflags(cfg)
-            if c_flags then
-                compile_options = compile_options .. " " .. table.concat(c_flags, " ")
-            end
-        elseif p.project.iscpp(prj) then
-            local cpp_flags = toolset.getcxxflags(cfg)
-            if cpp_flags then
-                compile_options = compile_options .. " " .. table.concat(cpp_flags, " ")
-            end
-        end
-        if #compile_options > 0 then
-            p.x('target_compile_options(%s PUBLIC %s)', prj.name, compile_options)
+        
+        -- custom buildoptions
+        if #cfg.buildoptions > 0 then
+            p.x('target_compile_options(%s PUBLIC %s)', prj.name, table.concat(cfg.buildoptions, " "))
         end
         
         -- linker options
