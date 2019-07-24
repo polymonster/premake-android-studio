@@ -189,7 +189,7 @@ function m.generate_cmake_lists(prj)
     local project_deps = ""
     
     -- include cmake dependencies
-    for _, dep in ipairs(project.getdependencies(prj, "dependOnly")) do
+    for _, dep in ipairs(project.getdependencies(prj)) do
         wks = prj.workspace
         for prj in workspace.eachproject(wks) do
             if prj.name == dep.name then
@@ -197,7 +197,10 @@ function m.generate_cmake_lists(prj)
                 local f = io.open(cmakef,"r")
                 if f ~= nil then 
                     io.close(f)
+                    -- Guarantee that we aren't defining the project more than once
+                    p.x('if(NOT TARGET %s)', prj.name)
                     p.x('include(%s)', cmakef)
+                    p.x('endif()')
                     project_deps = (project_deps .. " " .. prj.name)
                 end
             end 
