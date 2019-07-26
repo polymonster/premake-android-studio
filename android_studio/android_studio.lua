@@ -189,7 +189,7 @@ function m.generate_cmake_lists(prj)
     local project_deps = ""
     
     -- include cmake dependencies
-    for _, dep in ipairs(project.getdependencies(prj, "dependOnly")) do
+    for _, dep in ipairs(project.getdependencies(prj)) do
         wks = prj.workspace
         for prj in workspace.eachproject(wks) do
             if prj.name == dep.name then
@@ -197,7 +197,10 @@ function m.generate_cmake_lists(prj)
                 local f = io.open(cmakef,"r")
                 if f ~= nil then 
                     io.close(f)
+                    -- Guarantee that we aren't defining the project more than once
+                    p.x('if(NOT TARGET %s)', prj.name)
                     p.x('include(%s)', cmakef)
+                    p.x('endif()')
                     project_deps = (project_deps .. " " .. prj.name)
                 end
             end 
@@ -233,68 +236,53 @@ function m.generate_cmake_lists(prj)
             p.x('target_include_directories(%s PUBLIC %s)', prj.name, include_dirs)
         end
         
-        -- include dirs
-        local include_dirs = ""
-        for _, dir in ipairs(cfg.includedirs) do
-            include_dirs = (include_dirs .. " " .. dir)
+        -- cpp flags
+        local cpp_flags = ""
+        for _, cppflag in ipairs(cfg.buildoptions) do
+            cpp_flags = (cpp_flags .. " " .. cppflag)
         end
-        if include_dirs ~= "" then
-            p.x('target_include_directories(%s PUBLIC %s)', prj.name, include_dirs)
+        
+        --optimises
+        local opt_map = { On = 3, Size = 's', Speed = 3, Full = 'fast', Debug = 1 }
+        opt_level = opt_map[cfg.optimize] 
+        if opt_level then
+            opt_flag = ("-O" .. opt_level)
+            cpp_flags = (cpp_flags .. " " .. opt_flag)
         end
 
-        -- toolset
-        local toolset = p.tools[cfg.toolset or "gcc"]
-
-        -- C flags
-        local c_flags = toolset.getcflags(cfg)	
-		
-        if #c_flags > 0 then
-            p.w('set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} %s")', table.concat(c_flags, " "))
+        if cpp_flags ~= "" then
+            p.x('target_compile_options(%s PUBLIC %s)', prj.name, cpp_flags)
         end
         
-        -- C++ flags
-        local cxx_flags = toolset.getcxxflags(cfg)
-		
-        if #cxx_flags > 0 then
-            p.w('set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} %s")', table.concat(cxx_flags, " "))
+        -- ld flags
+        local ld_flags = ""
+        
+        -- links
+        for _, link in ipairs(config.getlinks(cfg, "system", "fullpath")) do
+            ext = path.getextension(link)
+            if ext ~= ".aar" and ext ~= ".jar" then
+                ld_flags = (ld_flags .. " " .. link)
+            end
         end
         
-        -- custom buildoptions
-        if #cfg.buildoptions > 0 then
-            p.x('target_compile_options(%s PUBLIC %s)', prj.name, table.concat(cfg.buildoptions, " "))
+        -- project / dependency links
+        if project_deps ~= "" then
+            ld_flags = (ld_flags .. " " .. project_deps)
         end
         
-        -- linker options
-        local linker_options = ""
-        if project_deps then
-            linker_options = linker_options .. project_deps
-        end
-        local ld_flags = toolset.getldflags(cfg)
-        if ld_flags then
-            linker_options = linker_options .. " " .. table.concat(ld_flags, " ")
-        end
-
-		-- libdirs
-		for _, libdir in ipairs(cfg.libdirs) do
-            linker_options = linker_options .. " -L" .. libdir
-        end
-		
-        local links = toolset.getlinks(cfg, "system", "fullpath")
-        if links then
-            linker_options = linker_options .. " " .. table.concat(links, " ")
-        end
-        if #linker_options > 0 then
-            p.x('target_link_libraries(%s %s)', prj.name, linker_options)
+        for _, ldflag in ipairs(cfg.linkoptions) do
+            ld_flags = (ld_flags .. " " .. ldflag)
         end
         
-        -- defines
-        local defines = ""
-        for _, define in ipairs(cfg.defines) do
-            defines = (defines .. " " .. define)
+        -- lib directories
+        for _, libdir in ipairs(cfg.libdirs) do
+            ld_flags = (ld_flags .. " -L" .. libdir)
         end
-        if defines ~= "" then
-            p.x('target_compile_definitions(%s PUBLIC %s)', prj.name, defines)
+        
+        if ld_flags ~= "" then
+            p.x('target_link_libraries(%s %s)', prj.name, ld_flags)
         end
+        
         -- defines
         local defines = ""
         for _, define in ipairs(cfg.defines) do
