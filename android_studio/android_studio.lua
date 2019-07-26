@@ -189,7 +189,7 @@ function m.generate_cmake_lists(prj)
     local project_deps = ""
     
     -- include cmake dependencies
-    for _, dep in ipairs(project.getdependencies(prj)) do
+    for _, dep in ipairs(project.getdependencies(prj, "dependOnly")) do
         wks = prj.workspace
         for prj in workspace.eachproject(wks) do
             if prj.name == dep.name then
@@ -197,10 +197,7 @@ function m.generate_cmake_lists(prj)
                 local f = io.open(cmakef,"r")
                 if f ~= nil then 
                     io.close(f)
-                    -- Guarantee that we aren't defining the project more than once
-                    p.x('if(NOT TARGET %s)', prj.name)
                     p.x('include(%s)', cmakef)
-                    p.x('endif()')
                     project_deps = (project_deps .. " " .. prj.name)
                 end
             end 
@@ -235,18 +232,29 @@ function m.generate_cmake_lists(prj)
         if include_dirs ~= "" then
             p.x('target_include_directories(%s PUBLIC %s)', prj.name, include_dirs)
         end
+        
+        -- include dirs
+        local include_dirs = ""
+        for _, dir in ipairs(cfg.includedirs) do
+            include_dirs = (include_dirs .. " " .. dir)
+        end
+        if include_dirs ~= "" then
+            p.x('target_include_directories(%s PUBLIC %s)', prj.name, include_dirs)
+        end
 
         -- toolset
         local toolset = p.tools[cfg.toolset or "gcc"]
 
         -- C flags
-        local c_flags = toolset.getcflags(cfg)
+        local c_flags = toolset.getcflags(cfg)	
+		
         if #c_flags > 0 then
             p.w('set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} %s")', table.concat(c_flags, " "))
         end
         
         -- C++ flags
         local cxx_flags = toolset.getcxxflags(cfg)
+		
         if #cxx_flags > 0 then
             p.w('set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} %s")', table.concat(cxx_flags, " "))
         end
@@ -265,10 +273,12 @@ function m.generate_cmake_lists(prj)
         if ld_flags then
             linker_options = linker_options .. " " .. table.concat(ld_flags, " ")
         end
-        local library_directories = toolset.getLibraryDirectories(cfg)
-        if library_directories then
-            linker_options = linker_options .. " " .. table.concat(library_directories, " ")
+
+		-- libdirs
+		for _, libdir in ipairs(cfg.libdirs) do
+            linker_options = linker_options .. " -L" .. libdir
         end
+		
         local links = toolset.getlinks(cfg, "system", "fullpath")
         if links then
             linker_options = linker_options .. " " .. table.concat(links, " ")
@@ -277,6 +287,14 @@ function m.generate_cmake_lists(prj)
             p.x('target_link_libraries(%s %s)', prj.name, linker_options)
         end
         
+        -- defines
+        local defines = ""
+        for _, define in ipairs(cfg.defines) do
+            defines = (defines .. " " .. define)
+        end
+        if defines ~= "" then
+            p.x('target_compile_definitions(%s PUBLIC %s)', prj.name, defines)
+        end
         -- defines
         local defines = ""
         for _, define in ipairs(cfg.defines) do
