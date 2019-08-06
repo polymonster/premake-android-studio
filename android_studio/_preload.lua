@@ -126,3 +126,17 @@ p.api.register
 	scope = "project",
 	kind = "string"
 }
+
+p.api.register 
+{
+	name = "androidversioncode",
+	scope = "project",
+	kind = "string"
+}
+
+p.api.register 
+{
+	name = "androidversionname",
+	scope = "project",
+	kind = "string"
+}
