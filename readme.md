@@ -21,12 +21,12 @@ premake5 android-studio
 ```lua
 androidabis { "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64" }
 
+-- sdk / gradle version
 gradleversion "com.android.tools.build:gradle:3.1.4"
-
 androidsdkversion "28"
-
 androidminsdkversion "25"
 
+-- files, dependencies, directories
 androiddependencies
 {
     "com.android.support:appcompat-v7:+", 
@@ -45,13 +45,15 @@ assetdirs
     "path/to/assets" -- these will go into android asset manager and inside .pkg
 }
 
+-- signing
 androidkeystorefile "keystore.jks"
-
 androidstorepassword "K3yStorePa55w0rd"
-
 androidkeyalias "Product Key"
-
 androidkeypassword "Pr0ductK3yPa$$word"
+
+-- version info
+androidversioncode "1"
+androidversionname "1.0"
 
 ```
 

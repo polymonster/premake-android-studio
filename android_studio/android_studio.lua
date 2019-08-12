@@ -349,8 +349,15 @@ function m.generate_project(prj)
     p.push('defaultConfig {')
     p.x('minSdkVersion %s', prj.androidminsdkversion)
     p.x('targetSdkVersion %s', prj.androidsdkversion)
-    p.w('versionCode 1')
-    p.w('versionName "1.0"')
+
+    if prj.androidversioncode == nil then
+		prj.androidversioncode = "1"
+	end
+	if prj.androidversionname == nil then
+		prj.androidversionname = "1.0"
+	end
+	p.w('versionCode %s', prj.androidversioncode)
+	p.w('versionName \"%s\"', prj.androidversionname)
     
     if complete_signing_info then
         p.x('signingConfig signingConfigs.config')
