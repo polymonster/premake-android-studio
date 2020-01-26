@@ -1,4 +1,4 @@
-name: premake-android-studio-ci
+name: ci
 on: [push]
 jobs:
   build:
