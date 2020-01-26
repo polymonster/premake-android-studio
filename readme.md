@@ -1,4 +1,5 @@
-# premake-android-studio [![Build Status](https://travis-ci.org/polymonster/premake-android-studio.svg?branch=master)](https://travis-ci.org/polymonster/premake-android-studio)
+# premake-android-studio 
+[![Build Status](https://github.com/polymonster/premake-android-studio/workflows/premake-android-studio-ci/badge.svg)](https://github.com/polymonster/premake-android-studio/actions)
 
 If you are using premake as your build configuration system for Visual Studio, XCode or GNU Make and wanted to easily integrate Android into your development work flow, this module will abstract the convoluted world of gradle, sdk and ndk.
 
