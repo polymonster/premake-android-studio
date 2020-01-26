@@ -1,11 +1,11 @@
-name: CI
+name: premake-android-studio-ci
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Run a multi-line script
+    - name: Build example
       run: |
         cd example
         ../premake5 android-studio
