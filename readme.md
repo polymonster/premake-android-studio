@@ -187,7 +187,9 @@ so for package com.as.example function hello_cpp becomes Java_com_as_example_mai
 
 An example program is included for testing and reference purposes, it features a main activity, a java entry point and a jni call to native c++ code.
 
-To run the example (osx only):
+The premake5 executable provided in this repository is for linux, if you want to build for another platform change this exectuable.
+
+To run the example:
 ```bash
 cd example
 ../premake5 android-studio
