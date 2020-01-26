@@ -1,0 +1,13 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run a multi-line script
+      run: |
+        cd example
+        ../premake5 android-studio
+        cd build
+        gradle build --stacktrace
