@@ -1,4 +1,4 @@
 #include <jni.h>
-#include <android/Log.h>
+#include <android/log.h>
 
 // this header is used to test cmake include dirs
