@@ -140,3 +140,10 @@ p.api.register
 	scope = "project",
 	kind = "string"
 }
+
+p.api.register 
+{
+    name = "androidndkpath",
+    scope = "project",
+    kind = "string"
+}
