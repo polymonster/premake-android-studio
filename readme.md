@@ -24,6 +24,7 @@ androidabis { "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64" }
 gradleversion "com.android.tools.build:gradle:3.1.4"
 androidsdkversion "28"
 androidminsdkversion "25"
+androidndkpath "file_path_to_ndk_directory_is_optional"
 
 -- files, dependencies, directories
 androiddependencies

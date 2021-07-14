@@ -346,6 +346,10 @@ function m.generate_project(prj)
     
     p.x('compileSdkVersion %s', prj.androidsdkversion)
     
+    if prj.androidndkpath ~= nil then
+        p.x('ndkPath \"%s\"', prj.androidndkpath)
+    end
+    
     p.push('defaultConfig {')
     p.x('minSdkVersion %s', prj.androidminsdkversion)
     p.x('targetSdkVersion %s', prj.androidsdkversion)
