@@ -10,6 +10,5 @@ jobs:
         sudo apt-get install ninja-build
         cd example
         ../premake5 android-studio
-        ./sdkmanager --list
         cd build
         gradle build --stacktrace --warning-mode all --scan
