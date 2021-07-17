@@ -275,8 +275,8 @@ function m.generate_cmake_lists(prj)
             linker_options = linker_options .. " " .. table.concat(ld_flags, " ")
         end
 
-		-- libdirs
-		for _, libdir in ipairs(cfg.libdirs) do
+	-- libdirs
+	for _, libdir in ipairs(cfg.libdirs) do
             linker_options = linker_options .. " -L" .. libdir
         end
 		
@@ -412,7 +412,7 @@ function m.generate_project(prj)
     for cfg in project.eachconfig(prj) do
         p.push(string.lower(cfg.name) .. ' {')
         m.add_sources(cfg, 'java', {'.java'}, {})
-        m.add_sources(cfg, 'res', {'.png', '.xml'}, {"AndroidManifest.xml"}, "/res/")
+        -- m.add_sources(cfg, 'res', {'.png', '.xml'}, {"AndroidManifest.xml"}, "/res/")
         p.pop('}') -- cfg.name
     end
     p.pop('}') -- sources
