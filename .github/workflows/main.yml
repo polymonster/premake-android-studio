@@ -11,5 +11,4 @@ jobs:
         cd example
         ../premake5 android-studio
         cd build
-        sdkmanager --list
         gradlew build
