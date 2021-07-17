@@ -45,6 +45,13 @@ project "android_studio_example"
 		"arm64-v8a"
 	}
 
+	androiddependencies
+	{
+		"com.android.support:appcompat-v7:26.0.2",
+		"com.android.support:support-v4:26.0.2",
+		"com.android.support:design:26.0.2"
+	}
+
 	configuration "Debug"
 		defines { "DEBUG" }
 		symbols "On"
