@@ -11,4 +11,4 @@ jobs:
         cd example
         ../premake5 android-studio
         cd build
-        ./gradlew build
+        ./gradle build
