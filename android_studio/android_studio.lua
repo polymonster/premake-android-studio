@@ -412,7 +412,7 @@ function m.generate_project(prj)
     for cfg in project.eachconfig(prj) do
         p.push(string.lower(cfg.name) .. ' {')
         m.add_sources(cfg, 'java', {'.java'}, {})
-        -- m.add_sources(cfg, 'res', {'.png', '.xml'}, {"AndroidManifest.xml"}, "/res/")
+        m.add_sources(cfg, 'res', {'.png', '.xml'}, {"AndroidManifest.xml"}, "/res/")
         p.pop('}') -- cfg.name
     end
     p.pop('}') -- sources
