@@ -11,4 +11,4 @@ jobs:
         cd example
         ../premake5 android-studio
         cd build
-        gradle build --stacktrace --warning-mode all --scan
+        ./gradlew build
