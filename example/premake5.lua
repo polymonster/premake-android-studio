@@ -10,6 +10,9 @@ project "android_studio_example"
 	language "C++"
 	targetdir "bin/%{cfg.buildcfg}"
 
+    	androidsdkversion "26"
+    	androidminsdkversion "21"
+
 	files 
 	{ 
 		"cpp/**.*", 
@@ -39,7 +42,7 @@ project "android_studio_example"
 	
 	androidabis
 	{
-		"armeabi-v7a", "x86"
+		"arm64-v8a"
 	}
 
 	configuration "Debug"
