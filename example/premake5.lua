@@ -10,8 +10,8 @@ project "android_studio_example"
 	language "C++"
 	targetdir "bin/%{cfg.buildcfg}"
 
-    	androidsdkversion "26"
-    	androidminsdkversion "21"
+    	androidsdkversion "29"
+    	androidminsdkversion "29"
 
 	files 
 	{ 
