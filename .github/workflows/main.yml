@@ -15,8 +15,7 @@ jobs:
       run: |
         sudo apt-get install ninja-build
         cd example
-        ls
-        rm -rf build
         ../premake5 android-studio
         cd build
         gradle build
+        ls
