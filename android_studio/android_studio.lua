@@ -279,7 +279,7 @@ function m.generate_cmake_lists(prj)
 		for _, libdir in ipairs(cfg.libdirs) do
             linker_options = linker_options .. " -L" .. libdir
         end
-		
+		        
         local links = toolset.getlinks(cfg, "system", "fullpath")
         if links then
             linker_options = linker_options .. " " .. table.concat(links, " ")
@@ -287,7 +287,7 @@ function m.generate_cmake_lists(prj)
         if #linker_options > 0 then
             p.x('target_link_libraries(%s %s)', prj.name, linker_options)
         end
-        
+                
         -- defines
         local defines = ""
         for _, define in ipairs(cfg.defines) do
@@ -319,8 +319,8 @@ function m.generate_project(prj)
     complete_signing_info = false
     if prj.androidkeyalias and 
        prj.androidkeystorefile and 
-       androidkeypassword and 
-       androidstorepassword then
+       prj.androidkeypassword and 
+       prj.androidstorepassword then
        complete_signing_info = true
     end
         
@@ -343,7 +343,7 @@ function m.generate_project(prj)
     if prj.androidminsdkversion == nil then
         prj.androidminsdkversion = "19"
     end        
-    
+        
     p.x('compileSdkVersion %s', prj.androidsdkversion)
     
     p.push('defaultConfig {')
