@@ -4,6 +4,10 @@ workspace "android_studio_example"
 	configurations { "Debug", "Release" }
 	gradleversion "com.android.tools.build:gradle:4.0.1"
 	location ("build")
+	
+	gradleproperties {
+		"org.gradle.jvmargs=-Xmx4608m"
+	} 
 
 project "android_studio_example"
 	kind "ConsoleApp"

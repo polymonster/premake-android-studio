@@ -72,6 +72,15 @@ function m.generate_workspace_settings(wks)
     end
 end
 
+function m.generate_gradle_properties(wks)
+    -- gradle properties
+    if wks.gradleproperties then
+        for _, prop in ipairs(wks.gradleproperties) do
+        	p.w(prop)
+        end
+    end
+end
+
 function get_android_program_kind(premake_kind)
     local premake_to_android_kind =
     {

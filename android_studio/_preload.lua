@@ -25,6 +25,7 @@ newaction {
 	onWorkspace = function(wks)
 		p.generate(wks, "settings.gradle", p.modules.android_studio.generate_workspace_settings)
 		p.generate(wks, "build.gradle",  p.modules.android_studio.generate_workspace)
+		p.generate(wks, "gradle.properties", p.modules.android_studio.generate_gradle_properties)
 	end,
 
 	onProject = function(prj)
@@ -61,6 +62,13 @@ p.api.register
 {
 	name = "androiddependencies",
 	scope = "project",
+	kind = "list:string"
+}
+
+p.api.register 
+{
+	name = "gradleproperties",
+	scope = "workspace",
 	kind = "list:string"
 }
 
