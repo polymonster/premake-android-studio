@@ -275,8 +275,8 @@ function m.generate_cmake_lists(prj)
             linker_options = linker_options .. " " .. table.concat(ld_flags, " ")
         end
 
-		-- libdirs
-		for _, libdir in ipairs(cfg.libdirs) do
+	-- libdirs
+	for _, libdir in ipairs(cfg.libdirs) do
             linker_options = linker_options .. " -L" .. libdir
         end
 		        
@@ -345,6 +345,10 @@ function m.generate_project(prj)
     end        
         
     p.x('compileSdkVersion %s', prj.androidsdkversion)
+    
+    if prj.androidndkpath ~= nil then
+        p.x('ndkPath \"%s\"', prj.androidndkpath)
+    end
     
     p.push('defaultConfig {')
     p.x('minSdkVersion %s', prj.androidminsdkversion)
