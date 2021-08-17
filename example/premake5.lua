@@ -2,7 +2,7 @@ require "android_studio"
 
 workspace "android_studio_example"
 	configurations { "Debug", "Release" }
-	gradleversion "com.android.tools.build:gradle:4.0.1"
+	gradleversion "com.android.tools.build:gradle:7.0.0"
 	location ("build")
 	
 	gradleproperties {
