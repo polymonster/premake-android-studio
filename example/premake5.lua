@@ -51,9 +51,7 @@ project "android_studio_example"
 
 	androiddependencies
 	{
-		"com.android.support:appcompat-v7:26.0.2",
 		"com.android.support:support-v4:27.1.0",
-		"com.android.support:design:26.0.2"
 	}
 
 	configuration "Debug"
