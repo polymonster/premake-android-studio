@@ -17,5 +17,5 @@ jobs:
         cd example
         ../premake5 android-studio
         cd build
-        gradle build
-        ls
+        gradle wrapper
+        ./gradlew build
