@@ -14,7 +14,9 @@ function create_asset_packs(wks)
 			gradle = (gradle .. "    }\n")
 			gradle = (gradle .. "}\n")
 			io.writefile(wks.location .. "/" .. name .. "/build.gradle", gradle)
-			if assetpackstring then
+			if not assetpackstring then
+				assetpackstring = ""
+			else
 				assetpackstring = (assetpackstring .. ", ")
 			end
 			assetpackstring = (assetpackstring .. "':" .. name .. "'") 
