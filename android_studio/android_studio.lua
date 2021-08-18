@@ -373,9 +373,11 @@ function m.generate_project(prj)
 			end
 			assetpackstring = (assetpackstring .. "':" .. name .. "'")
         end
-        p.push('assetPacks = [')
-        p.w(assetpackstring)
-    	p.pop(']')
+        if assetpackstring ~= "" then
+			p.push('assetPacks = [')
+			p.w(assetpackstring)
+			p.pop(']')
+    	end
     end
 
     -- sdk / ndk etc
