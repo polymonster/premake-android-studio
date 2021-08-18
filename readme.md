@@ -26,11 +26,17 @@ androidsdkversion "28"
 androidminsdkversion "25"
 androidndkpath "file_path_to_ndk_directory_is_optional"
 
--- gradle properties
+-- gradle properties (workspace scope)
 gradleproperties {
     "org.gradle.jvmargs=-Xmx4608m",
     "org.gradle.parallel=true"
 } 
+
+-- asset packs (workspace scope)
+assetpacks {
+    ["asset_pack_name"] = "install-time" -- supported values are "fast-follow", "on-demand", "install-time"
+    ["another_pack_name"] = "on-demand"
+}
 
 -- files, dependencies, directories
 androiddependencies
@@ -38,6 +44,12 @@ androiddependencies
     "com.android.support:appcompat-v7:+", 
     "com.android.support:support-v4:25.0.0",
     "com.android.support:design:25.0.0"
+}
+
+-- asset pack dependencies (project scope)
+assetpackdependencies {
+    "asset_pack_name",
+    "another_pack_name"
 }
 
 archivedirs
@@ -135,6 +147,9 @@ Manifest (AndoridManifest.xml)
 Native files are added to cmake lists.
 Java, Resource and Manifest files are added to the gradle project.
 ```
+
+If you want to use asset packs to publich to google play store and avoid the 150mb limit, you can simply use the 'assetpacks' key-value list to register asset packs. This will create a folder and the required metadata. Asset packs must be declared at workspace scope and included in a project via the `assetpackdependencies` string list at project scope. The asset pack directory will be created inside the top level gradle directory (workspace.location) from there it is up to you to copy your assets into the correct subdirectory
+`asset_pack_directory/src/main/assets`
 
 *****
 
