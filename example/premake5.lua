@@ -5,17 +5,18 @@ workspace "android_studio_example"
 	gradleversion "com.android.tools.build:gradle:4.0.1"
 	location ("build")
 	
-	gradleproperties {
-		"org.gradle.jvmargs=-Xmx4608m"
-	} 
+	assetpacks
+	{
+		["pack"] = "install-time",
+	}
 
 project "android_studio_example"
 	kind "ConsoleApp"
 	language "C++"
 	targetdir "bin/%{cfg.buildcfg}"
 
-    	androidsdkversion "29"
-    	androidminsdkversion "29"
+	androidsdkversion "29"
+	androidminsdkversion "29"
 
 	files 
 	{ 

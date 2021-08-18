@@ -70,6 +70,14 @@ function m.generate_workspace_settings(wks)
         p.x('include ":%s"', prj.name)
         p.x('project(":%s").projectDir = file("%s/%s")', prj.name, prj.location, prj.name)
     end
+    -- insert asset packs
+    if wks.assetpacks then
+    	for name, value in pairs(wks.assetpacks) do
+    		for _, item in ipairs(value) do
+    			p.x('include ":%s"', name)
+    		end
+    	end
+    end 
 end
 
 function m.generate_gradle_properties(wks)
@@ -79,6 +87,17 @@ function m.generate_gradle_properties(wks)
         	p.w(prop)
         end
     end
+end
+
+-- asset packs
+function m.generate_asset_pack(wks)
+    if wks.assetpacks then
+    	for name, value in pairs(wks.assetpacks) do
+    		for _, item in ipairs(value) do
+    			p.x("poop")
+    		end
+    	end
+    end 
 end
 
 function get_android_program_kind(premake_kind)
@@ -343,6 +362,13 @@ function m.generate_project(prj)
         p.x("storeFile file('%s')", prj.androidkeystorefile)
         p.pop('}') -- config
         p.pop('}') -- signingConfigs
+    end
+    
+    -- asset packs
+    if prj.assetpackstring then
+    	p.push('assetPacks = [')
+    	p.w(prj.assetpackstring)
+    	p.pop(']')
     end
 
     -- sdk / ndk etc
