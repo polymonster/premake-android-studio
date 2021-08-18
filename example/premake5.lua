@@ -2,7 +2,7 @@ require "android_studio"
 
 workspace "android_studio_example"
 	configurations { "Debug", "Release" }
-	gradleversion "com.android.tools.build:gradle:4.0.1"
+	gradleversion "com.android.tools.build:gradle:7.0.0"
 	location ("build")
 	
 	assetpacks
@@ -52,9 +52,7 @@ project "android_studio_example"
 
 	androiddependencies
 	{
-		"com.android.support:appcompat-v7:26.0.2",
-		"com.android.support:support-v4:26.0.2",
-		"com.android.support:design:26.0.2"
+		"com.android.support:support-v4:27.1.0",
 	}
 
 	configuration "Debug"

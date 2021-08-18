@@ -26,6 +26,12 @@ androidsdkversion "28"
 androidminsdkversion "25"
 androidndkpath "file_path_to_ndk_directory_is_optional"
 
+-- gradle properties
+gradleproperties {
+    "org.gradle.jvmargs=-Xmx4608m",
+    "org.gradle.parallel=true"
+} 
+
 -- files, dependencies, directories
 androiddependencies
 {
