@@ -1,5 +1,5 @@
 local p = premake
-local assetpackstring = ""
+local assetpackstring = nil
 
 function create_asset_packs(wks) 
 	-- create asset packs
@@ -14,7 +14,7 @@ function create_asset_packs(wks)
 			gradle = (gradle .. "    }\n")
 			gradle = (gradle .. "}\n")
 			io.writefile(wks.location .. "/" .. name .. "/build.gradle", gradle)
-			if assetpackstring ~= "" then
+			if assetpackstring then
 				assetpackstring = (assetpackstring .. ", ")
 			end
 			assetpackstring = (assetpackstring .. "':" .. name .. "'") 
