@@ -1,5 +1,4 @@
 local p = premake
-local assetpackstring = nil
 
 function create_asset_packs(wks) 
 	-- create asset packs
@@ -14,12 +13,6 @@ function create_asset_packs(wks)
 			gradle = (gradle .. "    }\n")
 			gradle = (gradle .. "}\n")
 			io.writefile(wks.location .. "/" .. name .. "/build.gradle", gradle)
-			if not assetpackstring then
-				assetpackstring = ""
-			else
-				assetpackstring = (assetpackstring .. ", ")
-			end
-			assetpackstring = (assetpackstring .. "':" .. name .. "'") 
 		end
 	end
 end
@@ -54,7 +47,6 @@ newaction {
 	end,
 
 	onProject = function(prj)
-		prj.assetpackstring = assetpackstring
 		if prj.androidmanifest == nil then
 			p.generate(prj, prj.name .. "/src/main/AndroidManifest.xml",  p.modules.android_studio.generate_manifest)
 		end
@@ -191,7 +183,7 @@ p.api.register
 
 p.api.register 
 {
-    name = "assetpacksdelivery",
-    scope = "workspace",
-    kind = "key-array"
+    name = "assetpackdependencies",
+    scope = "project",
+    kind = "list:string"
 }

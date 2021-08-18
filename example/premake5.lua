@@ -54,6 +54,11 @@ project "android_studio_example"
 	{
 		"com.android.support:support-v4:27.1.0",
 	}
+	
+	assetpackdependencies
+	{
+		"pack"
+	}
 
 	configuration "Debug"
 		defines { "DEBUG" }
