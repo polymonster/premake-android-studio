@@ -466,6 +466,24 @@ function m.generate_project(prj)
     p.w("abortOnError = false")
     p.pop('}')
     
+    -- applicationVariants
+    if prj.apkoutputpath ~= nil then
+        p.push('applicationVariants.all { variant ->')
+        p.push('variant.outputs.all { output ->')
+        p.x('outputFileName = new File("%s" + variant.buildType.name, project.name + ".apk")', prj.apkoutputpath)
+        p.pop('}')
+        p.pop('}')
+    end
+
+    -- libraryVariants
+    if prj.aaroutputpath ~= nil then
+        p.push('libraryVariants.all { variant ->')
+        p.push('variant.outputs.all { output ->')
+        p.x('outputFileName = new File("%s" + variant.buildType.name, project.name + ".aar")', prj.aaroutputpath)
+        p.pop('}')
+        p.pop('}')
+    end
+
     p.pop('}') -- android
             
     -- project dependencies, java links, etc

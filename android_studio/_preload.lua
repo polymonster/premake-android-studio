@@ -187,3 +187,17 @@ p.api.register
     scope = "project",
     kind = "list:string"
 }
+
+p.api.register
+{
+    name = "apkoutputpath",
+    scope = "project",
+    kind = "string"
+}
+
+p.api.register
+{
+    name = "aaroutputpath",
+    scope = "project",
+    kind = "string"
+}
