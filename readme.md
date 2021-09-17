@@ -73,6 +73,12 @@ androidkeypassword "Pr0ductK3yPa$$word"
 androidversioncode "1"
 androidversionname "1.0"
 
+-- Relative path to export the APK
+applicationoutputpath "./../../../../../builds"
+
+-- Relative path to export the AAR
+libraryoutputpath "./../../../../libs"
+
 ```
 
 *****

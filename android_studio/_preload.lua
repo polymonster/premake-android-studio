@@ -187,3 +187,17 @@ p.api.register
     scope = "project",
     kind = "list:string"
 }
+
+p.api.register
+{
+    name = "applicationoutputpath",
+    scope = "project",
+    kind = "string"
+}
+
+p.api.register
+{
+    name = "libraryoutputpath",
+    scope = "project",
+    kind = "string"
+}
