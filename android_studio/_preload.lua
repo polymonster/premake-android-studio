@@ -190,14 +190,14 @@ p.api.register
 
 p.api.register
 {
-    name = "applicationoutputpath",
+    name = "apkoutputpath",
     scope = "project",
     kind = "string"
 }
 
 p.api.register
 {
-    name = "libraryoutputpath",
+    name = "aaroutputpath",
     scope = "project",
     kind = "string"
 }

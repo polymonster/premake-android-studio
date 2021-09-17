@@ -467,19 +467,19 @@ function m.generate_project(prj)
     p.pop('}')
     
     -- applicationVariants
-    if prj.applicationoutputpath ~= nil then
+    if prj.apkoutputpath ~= nil then
         p.push('applicationVariants.all { variant ->')
         p.push('variant.outputs.all { output ->')
-        p.x('outputFileName = new File("%s" + variant.buildType.name, project.name + ".apk")', prj.applicationoutputpath)
+        p.x('outputFileName = new File("%s" + variant.buildType.name, project.name + ".apk")', prj.apkoutputpath)
         p.pop('}')
         p.pop('}')
     end
 
     -- libraryVariants
-    if prj.libraryoutputpath ~= nil then
+    if prj.aaroutputpath ~= nil then
         p.push('libraryVariants.all { variant ->')
         p.push('variant.outputs.all { output ->')
-        p.x('outputFileName = new File("%s" + variant.buildType.name, project.name + ".aar")', prj.libraryoutputpath)
+        p.x('outputFileName = new File("%s" + variant.buildType.name, project.name + ".aar")', prj.aaroutputpath)
         p.pop('}')
         p.pop('}')
     end

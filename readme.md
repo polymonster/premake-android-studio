@@ -74,10 +74,10 @@ androidversioncode "1"
 androidversionname "1.0"
 
 -- Relative path to export the APK
-applicationoutputpath "./../../../../../builds"
+apkoutputpath "./../../../../../builds"
 
 -- Relative path to export the AAR
-libraryoutputpath "./../../../../libs"
+aaroutputpath "./../../../../libs"
 
 ```
 
