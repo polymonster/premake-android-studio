@@ -76,6 +76,20 @@ p.api.register
 	kind = "string"
 }
 
+p.api.register
+{
+	name = "androiddependenciesworkspace",
+	scope = "workspace",
+	kind = "list:string"
+}
+
+p.api.register
+{
+	name = "androidplugins",
+	scope = "project",
+	kind = "list:string"
+}
+
 p.api.register 
 {
 	name = "androiddependencies",
