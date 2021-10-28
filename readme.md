@@ -26,19 +26,27 @@ androidsdkversion "28"
 androidminsdkversion "25"
 androidndkpath "file_path_to_ndk_directory_is_optional"
 
+-- plugins to apply (project scope)
+androidplugins
+{
+    "com.google.gms.google-services"
+}
+
 -- gradle properties (workspace scope)
-gradleproperties {
+gradleproperties
+{
     "org.gradle.jvmargs=-Xmx4608m",
     "org.gradle.parallel=true"
 } 
 
 -- asset packs (workspace scope)
-assetpacks {
+assetpacks
+{
     ["asset_pack_name"] = "install-time" -- supported values are "fast-follow", "on-demand", "install-time"
     ["another_pack_name"] = "on-demand"
 }
 
--- files, dependencies, directories
+-- files, dependencies, directories (project scope)
 androiddependencies
 {
     "com.android.support:appcompat-v7:+", 
@@ -46,8 +54,15 @@ androiddependencies
     "com.android.support:design:25.0.0"
 }
 
+-- files, dependencies, diretories (workspace scope)
+androiddependenciesworkspace
+{
+    "com.google.gms:google-services:4.3.10"
+}
+
 -- asset pack dependencies (project scope)
-assetpackdependencies {
+assetpackdependencies
+{
     "asset_pack_name",
     "another_pack_name"
 }
