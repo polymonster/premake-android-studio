@@ -33,13 +33,15 @@ androidplugins
 }
 
 -- gradle properties (workspace scope)
-gradleproperties {
+gradleproperties
+{
     "org.gradle.jvmargs=-Xmx4608m",
     "org.gradle.parallel=true"
 } 
 
 -- asset packs (workspace scope)
-assetpacks {
+assetpacks
+{
     ["asset_pack_name"] = "install-time" -- supported values are "fast-follow", "on-demand", "install-time"
     ["another_pack_name"] = "on-demand"
 }
@@ -59,7 +61,8 @@ androiddependenciesworkspace
 }
 
 -- asset pack dependencies (project scope)
-assetpackdependencies {
+assetpackdependencies
+{
     "asset_pack_name",
     "another_pack_name"
 }
