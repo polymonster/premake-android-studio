@@ -169,7 +169,8 @@ Native files are added to cmake lists.
 Java, Resource and Manifest files are added to the gradle project.
 ```
 
-If you want to use asset packs to publich to google play store and avoid the 150mb limit, you can simply use the 'assetpacks' key-value list to register asset packs. This will create a folder and the required metadata. Asset packs must be declared at workspace scope and included in a project via the `assetpackdependencies` string list at project scope. The asset pack directory will be created inside the top level gradle directory (workspace.location) from there it is up to you to copy your assets into the correct subdirectory
+## Asset Packs
+If you want to use asset packs to publish to google play store and avoid the 150mb limit, you can simply use the 'assetpacks' key-value list to register asset packs. This will create a folder and the required metadata. Asset packs must be declared at workspace scope and included in a project via the `assetpackdependencies` string list at project scope. The asset pack directory will be created inside the top level gradle directory (workspace.location) from there it is up to you to copy your assets into the correct subdirectory
 `asset_pack_directory/src/main/assets`
 
 *****
