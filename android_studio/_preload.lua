@@ -97,6 +97,13 @@ p.api.register
 	kind = "list:string"
 }
 
+p.api.register
+{
+	name = "androidrepositories",
+	scope = "workspace",
+	kind = "list:string"
+}
+
 p.api.register 
 {
 	name = "gradleproperties",

@@ -37,7 +37,17 @@ gradleproperties
 {
     "org.gradle.jvmargs=-Xmx4608m",
     "org.gradle.parallel=true"
-} 
+}
+
+-- repositories (workspace scope)
+--
+-- if left empty then default google() and jcenter() repositories will be supplied
+-- otherwise, only the repository entries listed will be supplied
+androidrepositories
+{
+    "jcenter()",
+    "maven { url 'http://maven.gameanalytics.com/release' }"
+}
 
 -- asset packs (workspace scope)
 assetpacks
@@ -47,9 +57,14 @@ assetpacks
 }
 
 -- files, dependencies, directories (project scope)
+--
+-- starting an entry with 'implementation' keyword will result in the entry string being copied over raw
+-- if 'implementation' is not specified at the start then it will be implicitly added as well as the quotes
+-- the raw string method can be used to add more complex dependencies, e.g. fileTree(), files(), etc. 
 androiddependencies
 {
-    "com.android.support:appcompat-v7:+", 
+    "implementation platform('com.google.firebase:firebase-bom:29.0.0')",
+    "com.android.support:appcompat-v7:+",
     "com.android.support:support-v4:25.0.0",
     "com.android.support:design:25.0.0"
 }
