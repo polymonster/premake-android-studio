@@ -26,6 +26,12 @@ androidsdkversion "28"
 androidminsdkversion "25"
 androidndkpath "file_path_to_ndk_directory_is_optional"
 
+-- extra build settings to apply to each config (config scope)
+androidbuildsettings
+{
+    "firebaseCrashlytics { nativeSymbolUploadEnabled true }"
+}
+
 -- plugins to apply (project scope)
 androidplugins
 {

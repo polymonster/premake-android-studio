@@ -78,6 +78,13 @@ p.api.register
 
 p.api.register
 {
+	name = "androidbuildsettings",
+	scope = "config",
+	kind = "list:string"
+}
+
+p.api.register
+{
 	name = "androiddependenciesworkspace",
 	scope = "workspace",
 	kind = "list:string"
