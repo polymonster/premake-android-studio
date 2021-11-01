@@ -453,6 +453,11 @@ function m.generate_project(prj)
             p.x('abiFilters %s', abi_list)
             p.pop('}')
         end
+
+        for _, setting in ipairs(cfg.androidbuildsettings) do
+            p.x('%s', setting)
+        end
+
         p.pop('}') -- cfg.name
     end
     p.pop('}') -- build types
