@@ -127,8 +127,8 @@ Here is a small example using `cp` to copy a file using a string with double quo
 
 ```lua
 postbuildcommands {
-	    "'cp', 'a.txt', 'b.txt'",
-	    "'echo', 'hello world!'"
+    "'cp', 'a.txt', 'b.txt'",
+    "'echo', 'hello world!'"
 }
 ```
 
