@@ -126,7 +126,7 @@ premake custom build commands are partially supported through the gradle exec ta
 Here is a small example using `cp` to copy a file using a string with double quotes `"` and wrapping the args in single quotes `'` with args separated by commas `,`. You can supply multiple post build commands which will be executed in order.
 
 ```lua
-	postbuildcommands {
+postbuildcommands {
 	    "'cp', 'a.txt', 'b.txt'",
 	    "'echo', 'hello world!'"
 }
