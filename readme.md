@@ -121,7 +121,7 @@ aaroutputpath "./../../../../libs"
 
 ## Custom build commands
 
-premake custom build commands are partially supported through the gradle exec task. Currently you can only apply `postbuildcommands`. Gradle exec is a bit strange so you need to separate all arguments by commas and wrap them in quotes. 
+premake [custom build commands](https://premake.github.io/docs/Custom-Build-Commands/) are partially supported through the gradle [exec](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Exec.html) task. Currently you can only apply `postbuildcommands`. Gradle exec is a bit strange so you need to separate all arguments by commas and wrap them in quotes. 
 
 Here is a small example using `cp` to copy a file using a string with double quotes `"` and wrapping the args in single quotes `'` with args separated by commas `,`. You can supply multiple post build commands which will be executed in order.
 
