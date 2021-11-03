@@ -119,6 +119,19 @@ aaroutputpath "./../../../../libs"
 
 *****
 
+## Custom build commands
+
+premake custom build commands are partially supported through the gradle exec task. Currently you can only apply `postbuildcommands`. Gradle exec is a bit strange so you need to separate all arguments by commas and wrap them in quotes. 
+
+Here is a small example using `cp` to copy a file using a string with double quotes `"` and wrapping the args in single quotes `'` with args separated by commas `,`. You can supply multiple post build commands which will be executed in order.
+
+```lua
+	postbuildcommands {
+	    "'cp', 'a.txt', 'b.txt'",
+	    "'echo', 'hello world!'"
+}
+```
+
 ## Android specific premake considerations
 
 You can use CMake variables injected specifically for android from within the premake script to make life easier to handle multiple abis and so forth.

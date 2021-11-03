@@ -498,6 +498,17 @@ function m.generate_project(prj)
     p.push('lintOptions {')
     p.w("abortOnError = false")
     p.pop('}')
+
+    -- custom build commands
+    if prj.postbuildcommands then
+        p.push('gradle.buildFinished {')
+        for _, cmd in ipairs(prj.postbuildcommands) do
+            p.push('exec {')
+            p.x("commandLine %s", cmd)
+            p.pop('}') -- exec
+        end
+        p.pop('}') -- gradle.buildFinished
+    end
     
     -- applicationVariants
     if prj.apkoutputpath ~= nil then
@@ -550,6 +561,7 @@ function m.generate_project(prj)
     end
     
     p.pop('}') -- dependencies
+
 end
 
 print("Premake: loaded module android-studio")
