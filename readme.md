@@ -45,6 +45,13 @@ gradleproperties
     "org.gradle.parallel=true"
 }
 
+-- gradle wrapper (workspace scope)
+-- generates the file build/android/gradle/wrapper/gradle-wrapper.properties
+gradlewrapper 
+{
+    "distributionUrl=https://services.gradle.org/distributions/gradle-7.1-bin.zip"
+}
+
 -- repositories (workspace scope)
 --
 -- if left empty then default google() and jcenter() repositories will be supplied
@@ -121,7 +128,7 @@ aaroutputpath "./../../../../libs"
 
 ## Custom build commands
 
-premake custom build commands are partially supported through the gradle exec task. Currently you can only apply `postbuildcommands`. Gradle exec is a bit strange so you need to separate all arguments by commas and wrap them in quotes. 
+premake custom build commands are partially supported through the gradle exec task. Currently you can only apply `prebuildcommand` and `postbuildcommands`. Gradle exec is a bit strange so you need to separate all arguments by commas and wrap them in quotes. 
 
 Here is a small example using `cp` to copy a file using a string with double quotes `"` and wrapping the args in single quotes `'` with args separated by commas `,`. You can supply multiple post build commands which will be executed in order.
 

@@ -461,6 +461,17 @@ function m.generate_project(prj)
         p.pop('}') -- cfg.name
     end
     p.pop('}') -- build types
+
+    -- custom build commands
+    if prj.prebuildcommands then
+        p.push('preBuild {')
+        for _, cmd in ipairs(prj.prebuildcommands) do
+            p.push('exec {')
+            p.x("commandLine %s", cmd)
+            p.pop('}') -- exec
+        end
+        p.pop('}') -- preBuild
+    end
         
     -- cmake
     p.push('externalNativeBuild {')
@@ -499,10 +510,10 @@ function m.generate_project(prj)
     p.w("abortOnError = false")
     p.pop('}')
 
-    -- custom build commands
     if prj.postbuildcommands then
         p.push('gradle.buildFinished {')
         for _, cmd in ipairs(prj.postbuildcommands) do
+            print(cmd)
             p.push('exec {')
             p.x("commandLine %s", cmd)
             p.pop('}') -- exec
