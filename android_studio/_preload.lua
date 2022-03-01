@@ -54,9 +54,9 @@ newaction {
 		p.generate(wks, "settings.gradle", p.modules.android_studio.generate_workspace_settings)
 		p.generate(wks, "build.gradle",  p.modules.android_studio.generate_workspace)
 		p.generate(wks, "gradle.properties", p.modules.android_studio.generate_gradle_properties)
-		if wks.runConfigurationOptions and wks.runConfigurationModule then
-			p.generate(wks, "./../.idea/runConfigurations/" .. wks.name .. ".xml", p.modules.android_studio.generate_run_configuration)
-		end
+        if wks.runConfigurationOptions and wks.runConfigurationModule then
+            p.generate(wks, "./../.idea/runConfigurations/" .. wks.name .. ".xml", p.modules.android_studio.generate_run_configuration)
+        end
 		create_asset_packs(wks)
 		create_gradle_wrapper(wks)
 	end,
@@ -240,16 +240,16 @@ p.api.register
 
 p.api.register
 {
-	name = "runConfigurationModule",
-	scope = "workspace",
-	kind = "string"
+    name = "runConfigurationModule",
+    scope = "workspace",
+    kind = "string"
 }
 
 p.api.register
 {
-	name = "runConfigurationOptions",
-	scope = "workspace",
-	kind = "key-array"
+    name = "runConfigurationOptions",
+    scope = "workspace",
+    kind = "key-array"
 }
 
 p.api.register
