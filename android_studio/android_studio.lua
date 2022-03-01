@@ -93,11 +93,11 @@ function m.generate_workspace_settings(wks)
     end
     -- insert asset packs
     if wks.assetpacks then
-    	for name, value in pairs(wks.assetpacks) do
-    		for _, item in ipairs(value) do
-    			p.x('include ":%s"', name)
-    		end
-    	end
+        for name, value in pairs(wks.assetpacks) do
+            for _, item in ipairs(value) do
+                p.x('include ":%s"', name)
+            end
+        end
     end 
 end
 
@@ -105,7 +105,7 @@ function m.generate_gradle_properties(wks)
     -- gradle properties
     if wks.gradleproperties then
         for _, prop in ipairs(wks.gradleproperties) do
-        	p.w(prop)
+            p.w(prop)
         end
     end
 end
@@ -135,11 +135,11 @@ end
 -- asset packs
 function m.generate_asset_pack(wks)
     if wks.assetpacks then
-    	for name, value in pairs(wks.assetpacks) do
-    		for _, item in ipairs(value) do
-    			p.x("poop")
-    		end
-    	end
+        for name, value in pairs(wks.assetpacks) do
+            for _, item in ipairs(value) do
+                p.x("poop")
+            end
+        end
     end 
 end
 
@@ -172,18 +172,18 @@ end
 
 function m.generate_manifest(prj)
     -- look for a manifest in project files
-	for cfg in project.eachconfig(prj) do		
-		for _, file in ipairs(cfg.files) do
-			if string.find(file, "AndroidManifest.xml") then
-				-- copy contents of manifest and write with premake
-				manifest = io.open(file, "r")
-				xml = manifest:read("*a")
-				manifest:close()
-				p.w(xml)
-				return
-			end
-		end
-	end
+    for cfg in project.eachconfig(prj) do       
+        for _, file in ipairs(cfg.files) do
+            if string.find(file, "AndroidManifest.xml") then
+                -- copy contents of manifest and write with premake
+                manifest = io.open(file, "r")
+                xml = manifest:read("*a")
+                manifest:close()
+                p.w(xml)
+                return
+            end
+        end
+    end
 
     -- auto generate stub android manifest
     p.w('<?xml version="1.0" encoding="utf-8"?>')
@@ -320,7 +320,7 @@ function m.generate_cmake_lists(prj)
         local toolset = p.tools[cfg.toolset or "gcc"]
 
         -- C flags
-        local c_flags = toolset.getcflags(cfg)	
+        local c_flags = toolset.getcflags(cfg)  
         if #c_flags > 0 then
             p.w('set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} %s")', table.concat(c_flags, " "))
         end
@@ -346,11 +346,11 @@ function m.generate_cmake_lists(prj)
             linker_options = linker_options .. " " .. table.concat(ld_flags, " ")
         end
 
-	-- libdirs
-	for _, libdir in ipairs(cfg.libdirs) do
+    -- libdirs
+    for _, libdir in ipairs(cfg.libdirs) do
             linker_options = linker_options .. " -L" .. libdir
         end
-		        
+                
         local links = toolset.getlinks(cfg, "system", "fullpath")
         if links then
             linker_options = linker_options .. " " .. table.concat(links, " ")
@@ -416,18 +416,18 @@ function m.generate_project(prj)
     
     -- asset packs
     if prj.assetpackdependencies then
-    	local assetpackstring = ""
-		for _, name in ipairs(prj.assetpackdependencies) do
-			if assetpackstring ~= "" then
-				assetpackstring = (assetpackstring .. ", ")
-			end
-			assetpackstring = (assetpackstring .. "':" .. name .. "'")
+        local assetpackstring = ""
+        for _, name in ipairs(prj.assetpackdependencies) do
+            if assetpackstring ~= "" then
+                assetpackstring = (assetpackstring .. ", ")
+            end
+            assetpackstring = (assetpackstring .. "':" .. name .. "'")
         end
         if assetpackstring ~= "" then
-			p.push('assetPacks = [')
-			p.w(assetpackstring)
-			p.pop(']')
-    	end
+            p.push('assetPacks = [')
+            p.w(assetpackstring)
+            p.pop(']')
+        end
     end
 
     -- sdk / ndk etc
@@ -449,13 +449,13 @@ function m.generate_project(prj)
     p.x('targetSdkVersion %s', prj.androidsdkversion)
 
     if prj.androidversioncode == nil then
-		prj.androidversioncode = "1"
-	end
-	if prj.androidversionname == nil then
-		prj.androidversionname = "1.0"
-	end
-	p.w('versionCode %s', prj.androidversioncode)
-	p.w('versionName \"%s\"', prj.androidversionname)
+        prj.androidversioncode = "1"
+    end
+    if prj.androidversionname == nil then
+        prj.androidversionname = "1.0"
+    end
+    p.w('versionCode %s', prj.androidversioncode)
+    p.w('versionName \"%s\"', prj.androidversionname)
     
     if complete_signing_info then
         p.x('signingConfig signingConfigs.config')
