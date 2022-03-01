@@ -122,6 +122,20 @@ apkoutputpath "./../../../../../builds"
 -- Relative path to export the AAR
 aaroutputpath "./../../../../libs"
 
+-- run configuration module name
+-- the name of the module that will be run when running/debugging in Android Studio
+-- should be provided along with "runconfigoptions" to ensure run configuration targets correct module
+runconfigmodule "module"
+
+-- run configuration options
+-- key value pairs for the run configuration options, will be written to xml in <build>/.idea/runConfigurations
+-- { 'DEPLOY_APK_FROM_BUNDLE, 'true' } when using "assetpacks" ensures app is launched in the correct asset bundle mode
+runconfigoptions 
+{
+    { 'DEPLOY', 'true' },
+    { 'DEPLOY_APK_FROM_BUNDLE', 'true' },
+    { 'DEPLOY_AS_INSTANT', 'false' }
+}
 ```
 
 *****
