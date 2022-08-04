@@ -2,13 +2,21 @@ require "android_studio"
 
 workspace "android_studio_example"
 	configurations { "Debug", "Release" }
-	gradleversion "com.android.tools.build:gradle:3.1.4"
+	gradleversion "com.android.tools.build:gradle:7.0.0"
 	location ("build")
+	
+	assetpacks
+	{
+		["pack"] = "install-time",
+	}
 
 project "android_studio_example"
 	kind "ConsoleApp"
 	language "C++"
 	targetdir "bin/%{cfg.buildcfg}"
+
+	androidsdkversion "29"
+	androidminsdkversion "29"
 
 	files 
 	{ 
@@ -39,7 +47,17 @@ project "android_studio_example"
 	
 	androidabis
 	{
-		"armeabi-v7a", "x86"
+		"arm64-v8a"
+	}
+
+	androiddependencies
+	{
+		"com.android.support:support-v4:27.1.0",
+	}
+	
+	assetpackdependencies
+	{
+		"pack"
 	}
 
 	configuration "Debug"

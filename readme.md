@@ -24,13 +24,75 @@ androidabis { "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64" }
 gradleversion "com.android.tools.build:gradle:3.1.4"
 androidsdkversion "28"
 androidminsdkversion "25"
+androidndkpath "file_path_to_ndk_directory_is_optional"
 
--- files, dependencies, directories
+-- extra build settings to apply to each config (config scope)
+androidbuildsettings
+{
+    "firebaseCrashlytics { nativeSymbolUploadEnabled true }"
+}
+
+-- plugins to apply (project scope)
+androidplugins
+{
+    "com.google.gms.google-services"
+}
+
+-- gradle properties (workspace scope)
+gradleproperties
+{
+    "org.gradle.jvmargs=-Xmx4608m",
+    "org.gradle.parallel=true"
+}
+
+-- gradle wrapper (workspace scope)
+-- generates the file build/android/gradle/wrapper/gradle-wrapper.properties
+gradlewrapper 
+{
+    "distributionUrl=https://services.gradle.org/distributions/gradle-7.1-bin.zip"
+}
+
+-- repositories (workspace scope)
+--
+-- if left empty then default google() and jcenter() repositories will be supplied
+-- otherwise, only the repository entries listed will be supplied
+androidrepositories
+{
+    "jcenter()",
+    "maven { url 'http://maven.gameanalytics.com/release' }"
+}
+
+-- asset packs (workspace scope)
+assetpacks
+{
+    ["asset_pack_name"] = "install-time" -- supported values are "fast-follow", "on-demand", "install-time"
+    ["another_pack_name"] = "on-demand"
+}
+
+-- files, dependencies, directories (project scope)
+--
+-- starting an entry with 'implementation' keyword will result in the entry string being copied over raw
+-- if 'implementation' is not specified at the start then it will be implicitly added as well as the quotes
+-- the raw string method can be used to add more complex dependencies, e.g. fileTree(), files(), etc. 
 androiddependencies
 {
-    "com.android.support:appcompat-v7:+", 
+    "implementation platform('com.google.firebase:firebase-bom:29.0.0')",
+    "com.android.support:appcompat-v7:+",
     "com.android.support:support-v4:25.0.0",
     "com.android.support:design:25.0.0"
+}
+
+-- files, dependencies, diretories (workspace scope)
+androiddependenciesworkspace
+{
+    "com.google.gms:google-services:4.3.10"
+}
+
+-- asset pack dependencies (project scope)
+assetpackdependencies
+{
+    "asset_pack_name",
+    "another_pack_name"
 }
 
 archivedirs
@@ -54,9 +116,42 @@ androidkeypassword "Pr0ductK3yPa$$word"
 androidversioncode "1"
 androidversionname "1.0"
 
+-- Relative path to export the APK
+apkoutputpath "./../../../../../builds"
+
+-- Relative path to export the AAR
+aaroutputpath "./../../../../libs"
+
+-- run configuration module name
+-- the name of the module that will be run when running/debugging in Android Studio
+-- should be provided along with "runconfigoptions" to ensure run configuration targets correct module
+runconfigmodule "module"
+
+-- run configuration options
+-- key value pairs for the run configuration options, will be written to xml in <build>/.idea/runConfigurations
+-- { 'DEPLOY_APK_FROM_BUNDLE, 'true' } when using "assetpacks" ensures app is launched in the correct asset bundle mode
+runconfigoptions 
+{
+    { 'DEPLOY', 'true' },
+    { 'DEPLOY_APK_FROM_BUNDLE', 'true' },
+    { 'DEPLOY_AS_INSTANT', 'false' }
+}
 ```
 
 *****
+
+## Custom build commands
+
+premake [custom build commands](https://premake.github.io/docs/Custom-Build-Commands/) are partially supported through the gradle [exec](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Exec.html) task. Currently you can only apply `prebuildcommand` and `postbuildcommands`. Gradle exec is a bit strange so you need to separate all arguments by commas and wrap them in quotes. 
+
+Here is a small example using `cp` to copy a file using a string with double quotes `"` and wrapping the args in single quotes `'` with args separated by commas `,`. You can supply multiple post build commands which will be executed in order.
+
+```lua
+postbuildcommands {
+    "'cp', 'a.txt', 'b.txt'",
+    "'echo', 'hello world!'"
+}
+```
 
 ## Android specific premake considerations
 
@@ -128,6 +223,10 @@ Manifest (AndoridManifest.xml)
 Native files are added to cmake lists.
 Java, Resource and Manifest files are added to the gradle project.
 ```
+
+## Asset Packs
+If you want to use asset packs to publish to google play store and avoid the 150mb limit, you can simply use the 'assetpacks' key-value list to register asset packs. This will create a folder and the required metadata. Asset packs must be declared at workspace scope and included in a project via the `assetpackdependencies` string list at project scope. The asset pack directory will be created inside the top level gradle directory (workspace.location) from there it is up to you to copy your assets into the correct subdirectory
+`asset_pack_directory/src/main/assets`
 
 *****
 
