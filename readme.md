@@ -39,11 +39,6 @@ androidplugins
     "com.google.gms.google-services"
 }
 
-gradleplugins 
-{ 
-    "com.google.gms.google-services" 
-}
-
 -- gradle properties (workspace scope)
 gradleproperties
 {
