@@ -89,6 +89,13 @@ androiddependenciesworkspace
     "com.google.gms:google-services:4.3.10"
 }
 
+-- cross project dependencies 
+androidprojectdependencies 
+{ 
+    "SubModuleA", 
+    "SubModuleB" 
+}
+
 -- asset pack dependencies (project scope)
 assetpackdependencies
 {

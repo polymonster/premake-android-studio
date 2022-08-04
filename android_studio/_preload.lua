@@ -113,6 +113,13 @@ p.api.register
     kind = "list:string"
 }
 
+p.api.register 
+{
+	name = "androidprojectdependencies",
+	scope = "project",
+	kind = "list:string"
+}
+
 p.api.register
 {
     name = "androidplugins",

@@ -611,6 +611,13 @@ function m.generate_project(prj)
         p.x("implementation project(':%s')", dep.name)
     end
     
+    -- android in-project dependencies 
+    if prj.androidprojectdependencies then
+        for _, dep in ipairs(prj.androidprojectdependencies) do
+            p.x("implementation project (':%s')", dep)
+        end        
+    end
+
     p.pop('}') -- dependencies
 
 end
