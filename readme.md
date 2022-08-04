@@ -25,6 +25,7 @@ gradleversion "com.android.tools.build:gradle:3.1.4"
 androidsdkversion "28"
 androidminsdkversion "25"
 androidndkpath "file_path_to_ndk_directory_is_optional"
+applicationId "com.company.application"
 
 -- extra build settings to apply to each config (config scope)
 androidbuildsettings
@@ -36,6 +37,11 @@ androidbuildsettings
 androidplugins
 {
     "com.google.gms.google-services"
+}
+
+gradleplugins 
+{ 
+    "com.google.gms.google-services" 
 }
 
 -- gradle properties (workspace scope)
@@ -136,6 +142,14 @@ runconfigoptions
     { 'DEPLOY_APK_FROM_BUNDLE', 'true' },
     { 'DEPLOY_AS_INSTANT', 'false' }
 }
+
+-- Custom CMake arguments injection
+inject2cmake
+{
+    '# setup: treat warnings as errors',
+    'set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")'
+}
+
 ```
 
 *****
@@ -209,6 +223,15 @@ AndroidManifest.xml is required for all projects, if one does not exist a simple
 files
 {
     "src/manifest/AndroidManifest.xml"
+}
+```
+
+Google-services.json is required for Google Firebase features, if google-services.json is specified inside premake files, then this one will be COPIED into the root of a project so the google services plugin can preprocess it:
+
+```lua
+files
+{
+    "src/google-services.json"
 }
 ```
 
