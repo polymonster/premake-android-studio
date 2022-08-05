@@ -194,6 +194,22 @@ function m.generate_manifest(prj)
     p.pop('<application/>')
     p.pop('</manifest>')
 end
+
+function m.generate_googleservices(prj)
+    -- look for a google-services in project files
+    for cfg in project.eachconfig(prj) do
+        for _, file in ipairs(cfg.files) do
+            if string.find(file, "google.services.json") then
+                -- copy contents of google-services and write with premake
+                json_file = io.open(file, "r")
+                json_content = json_file:read("*a")
+                json_file:close()
+                p.w(json_content)
+                return
+            end
+        end
+    end
+end
     
 function m.add_sources(cfg, category, exts, excludes, strip)        
     -- get srcDirs because gradle experimental with jni does not support adding single files :(
@@ -367,15 +383,14 @@ function m.generate_cmake_lists(prj)
         if defines ~= "" then
             p.x('target_compile_definitions(%s PUBLIC %s)', prj.name, defines)
         end
-        -- defines
-        local defines = ""
-        for _, define in ipairs(cfg.defines) do
-            defines = (defines .. " " .. define)
-        end
-        if defines ~= "" then
-            p.x('target_compile_definitions(%s PUBLIC %s)', prj.name, defines)
-        end
         
+        -- injecting custom cmake code 
+        if prj.androidcmake then
+            for _, line in ipairs(prj.androidcmake) do
+                p.x(line)
+            end
+        end
+
         p.w('endif()')
         
     end
@@ -445,6 +460,9 @@ function m.generate_project(prj)
     end
     
     p.push('defaultConfig {')
+    if prj.androidappid then
+        p.x('applicationId "%s"', prj.androidappid)
+    end
     p.x('minSdkVersion %s', prj.androidminsdkversion)
     p.x('targetSdkVersion %s', prj.androidsdkversion)
 
@@ -593,6 +611,13 @@ function m.generate_project(prj)
         p.x("implementation project(':%s')", dep.name)
     end
     
+    -- android in-project dependencies 
+    if prj.androidprojectdependencies then
+        for _, dep in ipairs(prj.androidprojectdependencies) do
+            p.x("implementation project (':%s')", dep)
+        end        
+    end
+
     p.pop('}') -- dependencies
 
 end

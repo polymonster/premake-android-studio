@@ -67,6 +67,7 @@ newaction {
         end
         p.generate(prj, prj.name .. "/build.gradle",  p.modules.android_studio.generate_project)
         p.generate(prj, prj.name .. "/CMakeLists.txt",  p.modules.android_studio.generate_cmake_lists)
+        p.generate(prj, prj.name .. "/google-services.json",  p.modules.android_studio.generate_googleservices)
     end
 }
 
@@ -109,6 +110,13 @@ p.api.register
 {
     name = "androiddependenciesworkspace",
     scope = "workspace",
+    kind = "list:string"
+}
+
+p.api.register 
+{
+    name = "androidprojectdependencies",
+    scope = "project",
     kind = "list:string"
 }
 
@@ -264,4 +272,18 @@ p.api.register
     name = "aaroutputpath",
     scope = "project",
     kind = "string"
+}
+
+p.api.register
+{
+    name = "androidappid",
+    scope = "project",
+    kind = "string"
+}
+
+p.api.register
+{
+    name = "androidcmake",
+    scope = "project",
+    kind = "list:string"
 }
