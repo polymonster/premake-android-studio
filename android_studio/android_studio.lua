@@ -201,10 +201,10 @@ function m.generate_googleservices(prj)
         for _, file in ipairs(cfg.files) do
             if string.find(file, "google.services.json") then
                 -- copy contents of google-services and write with premake
-                jsonFile = io.open(file, "r")
-                jsonContent = jsonFile:read("*a")
-                jsonFile:close()
-                p.w(jsonContent)
+                json_file = io.open(file, "r")
+                json_content = json_file:read("*a")
+                json_file:close()
+                p.w(json_content)
                 return
             end
         end
@@ -385,8 +385,8 @@ function m.generate_cmake_lists(prj)
         end
         
         -- injecting custom cmake code 
-        if prj.inject2cmake then
-            for _, line in ipairs(prj.inject2cmake) do
+        if prj.androidcmake then
+            for _, line in ipairs(prj.androidcmake) do
                 p.x(line)
             end
         end
@@ -460,9 +460,9 @@ function m.generate_project(prj)
     end
     
     p.push('defaultConfig {')
-    if prj.applicationId then
-        p.x('applicationId "%s"', prj.applicationId)
-    end    
+    if prj.androidappid then
+        p.x('applicationId "%s"', prj.androidappid)
+    end
     p.x('minSdkVersion %s', prj.androidminsdkversion)
     p.x('targetSdkVersion %s', prj.androidsdkversion)
 

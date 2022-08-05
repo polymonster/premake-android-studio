@@ -115,9 +115,9 @@ p.api.register
 
 p.api.register 
 {
-	name = "androidprojectdependencies",
-	scope = "project",
-	kind = "list:string"
+    name = "androidprojectdependencies",
+    scope = "project",
+    kind = "list:string"
 }
 
 p.api.register
@@ -276,14 +276,14 @@ p.api.register
 
 p.api.register
 {
-	name = "applicationId",
-	scope = "project",
-	kind = "string"
+    name = "androidappid",
+    scope = "project",
+    kind = "string"
 }
 
 p.api.register
 {
-	name = "inject2cmake",
-	scope = "project",
-	kind = "list:string"
+    name = "androidcmake",
+    scope = "project",
+    kind = "list:string"
 }

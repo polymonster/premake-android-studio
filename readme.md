@@ -25,7 +25,7 @@ gradleversion "com.android.tools.build:gradle:3.1.4"
 androidsdkversion "28"
 androidminsdkversion "25"
 androidndkpath "file_path_to_ndk_directory_is_optional"
-applicationId "com.company.application"
+androidappid "com.company.application"
 
 -- extra build settings to apply to each config (config scope)
 androidbuildsettings
@@ -146,7 +146,7 @@ runconfigoptions
 }
 
 -- Custom CMake arguments injection
-inject2cmake
+androidcmake
 {
     '# setup: treat warnings as errors',
     'set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")'
