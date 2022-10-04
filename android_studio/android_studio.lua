@@ -26,7 +26,7 @@ function m.generate_workspace(wks)
             p.w("%s", rep)
         end
     else
-        p.w('jcenter()')
+        p.w('mavenCentral()')
         p.w('google()')
     end
 
@@ -56,7 +56,7 @@ function m.generate_workspace(wks)
             p.w("%s", rep)
         end
     else
-        p.w('jcenter()')
+        p.w('mavenCentral()')
         p.w('google()')
     end
 
