@@ -152,6 +152,9 @@ androidcmake
     'set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")'
 }
 
+-- Android automation test instrumentation runner support 
+androidtestrunner "androidx.test.runner.AndroidJUnitRunner"
+
 ```
 
 *****
@@ -247,6 +250,24 @@ Manifest (AndoridManifest.xml)
 
 Native files are added to cmake lists.
 Java, Resource and Manifest files are added to the gradle project.
+```
+
+## Automation support 
+Android's UIAutomation2 framework requires the project to setup the `testInstrumentationRunner` and to add the required dependencies.
+The module will automatically inject the `androidTest.java.srcDirs` to discover your tests.
+
+This is an example of how to enable UIAutomation support for your project (addapt to your needs):
+
+```lua
+androidtestrunner "androidx.test.runner.AndroidJUnitRunner"
+
+ androiddependencies 
+{
+    "junit:junit:4.12",
+    "androidx.test:runner:1.4.0",
+    "androidx.test:rules:1.4.0",
+    "androidx.test.uiautomator:uiautomator:2.2.0",
+}
 ```
 
 ## Asset Packs
