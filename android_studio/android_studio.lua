@@ -475,6 +475,10 @@ function m.generate_project(prj)
     p.w('versionCode %s', prj.androidversioncode)
     p.w('versionName \"%s\"', prj.androidversionname)
     
+    if prj.androidtestrunner ~= nil then
+        p.x('testInstrumentationRunner \"%s\"', prj.androidtestrunner)
+    end
+    
     if complete_signing_info then
         p.x('signingConfig signingConfigs.config')
     end

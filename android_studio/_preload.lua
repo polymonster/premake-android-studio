@@ -287,3 +287,10 @@ p.api.register
     scope = "project",
     kind = "list:string"
 }
+
+p.api.register
+{
+    name = "androidtestrunner",
+    scope = "project",
+    kind = "string"
+}
