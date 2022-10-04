@@ -545,6 +545,7 @@ function m.generate_project(prj)
         p.push(string.lower(cfg.name) .. ' {')
         m.add_sources(cfg, 'java', {'.java'}, {})
         m.add_sources(cfg, 'res', {'.png', '.xml'}, {"AndroidManifest.xml"}, "/res/")
+        m.add_sources(cfg, 'androidTest.java', {'.java'}, {})
         p.pop('}') -- cfg.name
     end
     p.pop('}') -- sources

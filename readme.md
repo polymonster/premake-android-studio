@@ -253,7 +253,9 @@ Java, Resource and Manifest files are added to the gradle project.
 ```
 
 ## Automation support 
-Android's UIAutomation2 framework requires the project to setup the `testInstrumentationRunner` and `androidTest.java.srcDirs`, beside adding the required dependencies.
+Android's UIAutomation2 framework requires the project to setup the `testInstrumentationRunner` and to add the required dependencies.
+The module will automatically inject the `androidTest.java.srcDirs` to discover your tests.
+
 This is an example of how to enable UIAutomation support for your project (addapt to your needs):
 
 ```lua
