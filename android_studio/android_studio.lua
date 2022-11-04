@@ -543,7 +543,7 @@ function m.generate_project(prj)
     -- java and resource files
     for cfg in project.eachconfig(prj) do
         p.push(string.lower(cfg.name) .. ' {')
-        m.add_sources(cfg, 'java', {'.java'}, {})
+        m.add_sources(cfg, 'java', {'.java', '.kt'}, {})
         m.add_sources(cfg, 'res', {'.png', '.xml'}, {"AndroidManifest.xml"}, "/res/")
         m.add_sources(cfg, 'androidTest.java', {'.java'}, {})
         p.pop('}') -- cfg.name
