@@ -94,6 +94,13 @@ p.api.register
 
 p.api.register 
 {
+    name = "kotlinversion",
+    scope = "workspace",
+    kind = "string"
+}
+
+p.api.register 
+{
     name = "gradlewrapper",
     scope = "workspace",
     kind = "list:string"
