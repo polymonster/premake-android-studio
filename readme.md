@@ -204,12 +204,13 @@ archivedirs
 }
 ```
 
-When adding .java files for the android project please note that only directories and not single files can be added to the project, by adding a directory it's entire subtree is also added (ie. "dir/\*\*.\*), this means if a directory contains non java files they will still be added to the java source set. The simplest way to avoid adding files to the wrong category is to put all java files inside their own directory:
+When adding .java or .kt files for the android project please note that only directories and not single files can be added to the project, by adding a directory it's entire subtree is also added (ie. "dir/\*\*.\*), this means if a directory contains non java or Kotlin files they will still be added to the Jave source set. The simplest way to avoid adding files to the wrong category is to put all java and Kotlin files inside their own directory:
 
 ```lua
 files
 {
-    "src/java/**.java"
+    "src/java/**.java",
+    "src/java/**.kt"
 }
 ```
 
@@ -240,11 +241,11 @@ files
 }
 ```
 
-The module will dected files types based on extensions and add them into the appropriate categories:
+The module will detect file types based on extensions and add them into the appropriate categories:
 
 ```txt
 Native (.c, .h, .cpp, .hpp)
-Java (.java)
+Java (.java, .kt)
 Resource (.xml, .png)
 Manifest (AndoridManifest.xml)
 
@@ -309,12 +310,39 @@ public class main_activity extends Activity
 }
 ```
 
+Kotlin:
+```kotlin
+package com.as.example
+
+import android.app.Activity
+import android.os.Bundle
+import android.util.Log
+
+class MainActivity : Activity() {
+    companion object {
+        init {
+            System.loadLibrary("android_studio_example") // load c or c++ lib
+        }
+
+            external fun hello_cpp(): Int // declare c or c++ function (synonymous with c's extern)
+    }
+
+    override fun onCreate(arg0: Bundle?) {
+        super.onCreate(arg0)
+
+        Log.d("Hello world!", "I'm Kotlin")
+
+        hello_cpp() // call c or c++ function
+    }
+}
+```
+
 C/C++
 ```c
 extern "C"
 JNIEXPORT void JNICALL Java_com_as_example_main_1activity_hello_1cpp(void* args)
 {
-    __android_log_write(ANDROID_LOG_INFO, "CPP", "oh hai!, I'm c++");
+    __android_log_write(ANDROID_LOG_INFO, "CPP", "Oh hi!, I'm C++");
 }
 ```
 
