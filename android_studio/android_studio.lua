@@ -492,6 +492,17 @@ function m.generate_project(prj)
     if prj.androidndkpath ~= nil then
         p.x('ndkPath \"%s\"', prj.androidndkpath)
     end
+
+    if prj.androidndkversion ~= nil then
+        p.x('ndkVersion \"%s\"', prj.androidndkversion)
+    else
+        if prj.androidndkpath ~= nil then
+            local _, _, ndk_version = string.find(prj.androidndkpath, "ndk/(.+)")
+            if ndk_version ~= nil then
+                p.x('ndkVersion \"%s\"', ndk_version)
+            end
+        end
+    end
     
     p.push('defaultConfig {')
     if prj.androidappid then
