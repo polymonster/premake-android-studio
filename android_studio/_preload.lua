@@ -241,6 +241,13 @@ p.api.register
 
 p.api.register 
 {
+    name = "androidndkversion",
+    scope = "project",
+    kind = "string"
+}
+
+p.api.register 
+{
     name = "assetpacks",
     scope = "workspace",
     kind = "key-array"
