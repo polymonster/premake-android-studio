@@ -290,7 +290,7 @@ function m.csv_string_from_table(tab)
 end
     
 function m.generate_cmake_lists(prj)
-    p.w('cmake_minimum_required (VERSION 2.6)')
+    p.w('cmake_minimum_required (VERSION 3.0)')
     
     cmake_file_exts =
     {
