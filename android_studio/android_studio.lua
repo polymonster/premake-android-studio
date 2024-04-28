@@ -442,7 +442,11 @@ function m.generate_project(prj)
     end
 
     p.push('android {')
-    
+
+    if prj.androidnamespace then
+        p.x('namespace "%s"', prj.androidnamespace)
+    end
+
     complete_signing_info = false
     if prj.androidkeyalias and 
        prj.androidkeystorefile and 
