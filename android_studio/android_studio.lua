@@ -672,7 +672,7 @@ function m.generate_project(prj)
 
 end
 
-print("Premake: loaded module android-studio")
+--print("Premake: loaded module android-studio")
 
 -- Return module interface
 p.modules.android_studio = m
