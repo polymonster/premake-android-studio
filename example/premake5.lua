@@ -2,7 +2,7 @@ require "android_studio"
 
 workspace "android_studio_example"
 	configurations { "Debug", "Release" }
-	gradleversion "com.android.tools.build:gradle:8.0.0"
+	gradleversion "com.android.tools.build:gradle:8.0.2"
 	location ("build")
 	
 	assetpacks
@@ -28,7 +28,8 @@ project "android_studio_example"
 	{ 
 		"cpp/**.*", 
 		"java/**.*",
-		"manifest/**.*"
+		
+		-- "manifest/**.*"
 	}
 	
 	links
