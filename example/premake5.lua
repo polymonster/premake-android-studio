@@ -2,13 +2,15 @@ require "android_studio"
 
 workspace "android_studio_example"
 	configurations { "Debug", "Release" }
-	gradleversion "com.android.tools.build:gradle:7.0.0"
+	gradleversion "com.android.tools.build:gradle:8.0.0"
 	location ("build")
 	
 	assetpacks
 	{
 		["pack"] = "install-time",
 	}
+
+	androidnamespace "premake.andoid.studio"
 
 project "android_studio_example"
 	kind "ConsoleApp"
