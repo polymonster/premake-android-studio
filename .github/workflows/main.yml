@@ -11,12 +11,12 @@ jobs:
     - name: Setup JDK
       uses: actions/setup-java@v1
       with:
-        java-version: 11.0
+        java-version: 17.0
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
       with:
-          gradle-version: 7.5.1
+          gradle-version: 8.0.2
 
     - name: Build example
       run: |

@@ -2,12 +2,18 @@ require "android_studio"
 
 workspace "android_studio_example"
 	configurations { "Debug", "Release" }
-	gradleversion "com.android.tools.build:gradle:7.0.0"
+	gradleversion "com.android.tools.build:gradle:8.0.2"
 	location ("build")
 	
 	assetpacks
 	{
 		["pack"] = "install-time",
+	}
+
+	androidnamespace "premake.andoid.studio"
+
+	gradlewrapper {
+		"distributionUrl=https://services.gradle.org/distributions/gradle-8.0.2-bin.zip"
 	}
 
 project "android_studio_example"
@@ -22,7 +28,8 @@ project "android_studio_example"
 	{ 
 		"cpp/**.*", 
 		"java/**.*",
-		"manifest/**.*"
+		
+		-- "manifest/**.*"
 	}
 	
 	links
