@@ -12,6 +12,10 @@ workspace "android_studio_example"
 
 	androidnamespace "premake.andoid.studio"
 
+	gradlewrapper {
+		"distributionUrl=https://services.gradle.org/distributions/gradle-8.0.2-bin.zip"
+	}
+
 project "android_studio_example"
 	kind "ConsoleApp"
 	language "C++"
