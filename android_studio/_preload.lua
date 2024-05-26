@@ -150,6 +150,13 @@ p.api.register
 
 p.api.register 
 {
+    name = "androidnamespace",
+    scope = "workspace",
+    kind = "string"
+}
+
+p.api.register 
+{
     name = "gradleproperties",
     scope = "workspace",
     kind = "list:string"

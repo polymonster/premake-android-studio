@@ -197,6 +197,26 @@ function get_dir(file)
     return string.match(file, ".*/")
 end
 
+-- Extract version number from "com.android.tools.build:gradle:7.3.0"
+local function parse_version(str)
+    local version = string.match(str, "(%d+%.%d+%.%d+)")
+    if not version then
+        return nil  -- Version not found
+    end
+
+    local major, minor, patch = version:match("(%d+)%.(%d+)%.(%d+)")
+    if not major or not minor or not patch then
+        return nil  -- Invalid version format
+    end
+
+    return {
+        major = tonumber(major),
+        minor = tonumber(minor),
+        patch = tonumber(patch)
+    }
+end
+
+
 function m.generate_manifest(prj)
     -- look for a manifest in project files
     for cfg in project.eachconfig(prj) do       
@@ -215,7 +235,14 @@ function m.generate_manifest(prj)
     -- auto generate stub android manifest
     p.w('<?xml version="1.0" encoding="utf-8"?>')
     p.push('<manifest xmlns:android="http://schemas.android.com/apk/res/android"')
-    p.x('package="lib.%s"', prj.name)
+    -- Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported.
+    -- This behaviour was introduced in com.android.tools.build:gradle:7.3.0.
+    if prj.gradleversion then
+        local version = parse_version(prj.gradleversion)
+        if version.major < 7 or (version.major == 7 and version.minor <= 2) then
+            p.x('package="lib.%s"', prj.name)
+        end
+    end
     p.w('android:versionCode="1"')
     p.w('android:versionName="1.0" >')
     p.pop('<application/>')
@@ -290,7 +317,7 @@ function m.csv_string_from_table(tab)
 end
     
 function m.generate_cmake_lists(prj)
-    p.w('cmake_minimum_required (VERSION 2.6)')
+    p.w('cmake_minimum_required (VERSION 3.0)')
     
     cmake_file_exts =
     {
@@ -442,7 +469,11 @@ function m.generate_project(prj)
     end
 
     p.push('android {')
-    
+
+    if prj.androidnamespace then
+        p.x('namespace "%s"', prj.androidnamespace)
+    end
+
     complete_signing_info = false
     if prj.androidkeyalias and 
        prj.androidkeystorefile and 
@@ -672,7 +703,7 @@ function m.generate_project(prj)
 
 end
 
-print("Premake: loaded module android-studio")
+--print("Premake: loaded module android-studio")
 
 -- Return module interface
 p.modules.android_studio = m
