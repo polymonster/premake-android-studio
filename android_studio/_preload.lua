@@ -155,7 +155,7 @@ p.api.register
 p.api.register 
 {
     name = "androidnamespace",
-    scope = "workspace",
+    scope = "project",
     kind = "string"
 }
 
