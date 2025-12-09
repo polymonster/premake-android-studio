@@ -116,6 +116,8 @@ assetdirs
     "path/to/assets" -- these will go into android asset manager and inside .pkg
 }
 
+androiduselegacypackaging "false" -- legacy packaging option (true/false)
+
 -- signing
 androidkeystorefile "keystore.jks"
 androidstorepassword "K3yStorePa55w0rd"

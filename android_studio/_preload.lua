@@ -319,3 +319,10 @@ p.api.register
     scope = "project",
     kind = "string"
 }
+
+p.api.register
+{
+    name = "androiduselegacypackaging",
+    scope = "project",
+    kind = "string"
+}
