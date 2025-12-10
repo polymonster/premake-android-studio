@@ -556,7 +556,7 @@ function m.generate_project(prj)
     end
 
     p.push('defaultConfig {')
-    if prj.androidappid then
+    if prj.androidappid and get_android_program_kind(prj.kind) == "com.android.application" then
         p.x('applicationId "%s"', prj.androidappid)
     end
     p.x('minSdkVersion %s', prj.androidminsdkversion)
