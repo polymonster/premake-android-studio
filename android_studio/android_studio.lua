@@ -481,11 +481,9 @@ function m.generate_project(prj)
     p.push('android {')
 
     if prj.androiduselegacypackaging then
-        p.push('android {')
         p.push('packagingOptions { ')
         p.push('jniLibs { ')
         p.x("useLegacyPackaging %s", prj.androiduselegacypackaging)
-        p.pop('}')
         p.pop('}')
         p.pop('}')
     end
