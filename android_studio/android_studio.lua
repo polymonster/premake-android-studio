@@ -596,6 +596,12 @@ function m.generate_project(prj)
             p.x('%s', setting)
         end
 
+        p.push('externalNativeBuild {')
+        p.push('cmake {')
+        p.push('arguments "-DCMAKE_BUILD_TYPE=%s"', cfg.name)
+        p.pop('}')
+        p.pop('}')
+
         p.pop('}') -- cfg.name
     end
     p.pop('}') -- build types
